@@ -1,12 +1,12 @@
 
 ;; ----- smex-history -----
 (
+ wg-open-session
  dockerfile-build-buffer
  server-start
  package-list-packages
  package-autoremove
  ido-at-point-mode
- completion-help-at-point
  rgrep
 )
 
@@ -58,7 +58,7 @@
  (cider-stacktrace-mode . 2)
  (pwd . 1)
  (cd . 2)
- (wg-open-session . 8)
+ (wg-open-session . 10)
  (wg-save-session-as . 2)
  (ocodo-svg-modelines-init . 1)
  (smt/set-theme . 13)
@@ -148,7 +148,7 @@
  (cmake-ide-maybe-run-cmake . 1)
  (cmake-ide-compile . 1)
  (ad-disable-advice . 1)
- (wg-switch-to-workgroup . 2)
+ (wg-switch-to-workgroup . 3)
  (rtags-is-running . 2)
  (cmake-ide-maybe-start-rdm . 1)
  (nroff-mode . 2)
