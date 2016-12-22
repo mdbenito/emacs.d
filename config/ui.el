@@ -1,0 +1,221 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Frame and window config
+
+;; "Winner mode is a global minor mode that records the changes in
+;; the window configuration (i.e. how the frames are partitioned
+;; into windows) so that the changes can be "undone" using the
+;; command ‘winner-undo’.  By default this one is bound to the key
+;; sequence ‘C-c <left>’.  If you change your mind (while undoing),
+;; you can press ‘C-c <right>’ (calling ‘winner-redo’)."
+(winner-mode 1)
+
+;; Full path in title bar
+(setq-default frame-title-format "%b (%f)")
+
+;; Turn off the menu bar at the top of each frame because it's distracting
+(when (fboundp 'menu-bar-mode)
+  (menu-bar-mode -1))
+
+; Don't show the ugly tool bar at the top
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+;; Don't show native OS scroll bars for buffers because they're redundant
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
+;; Show line and column numbers
+(column-number-mode 1)
+;(add-hook 'prog-mode-hook #'linum-mode) ; Don't!!! linum is slooooow!
+(require 'nlinum)  ; nlinum caches line numbers for a while to be much faster
+(add-hook 'prog-mode-hook #'nlinum-mode)
+;; FIXME: This is only available with nlinum v1.7 but elpa has 1.6
+(setq nlinum-highlight-current-line t)
+
+;; Draw hrulers instead of ^L
+(require 'page-break-lines)
+(global-page-break-lines-mode 1)
+
+;; Customizations for tabbar
+(load "tabbar-custom.el")
+
+;; Pinning windows. See:
+;; http://stackoverflow.com/questions/43765/pin-emacs-buffers-to-windows-for-cscope
+(defun toggle-window-dedicated ()
+  "Toggle whether the current active window is dedicated or not.
+  Code by Frank Klotz."
+  (interactive)
+  (message 
+   (if (let (window (get-buffer-window (current-buffer)))      
+         (set-window-dedicated-p window 
+                                 (not (window-dedicated-p window))))
+       "Window '%s' is dedicated"
+     "Window '%s' is normal")
+   (current-buffer)))
+
+(global-set-key (kbd "<f12>") #'toggle-window-dedicated)
+
+;; popwin lets us have any special buffers (by default, *Help*, *Completions*,
+;; *compilation*, and *Occur*, specified in popwin:special-display-config) to
+;; always show in a popup window. One can close it by typing C-g or selecting
+;; other windows.
+(require 'popwin)
+(popwin-mode 1)
+;; Add buffer for disambiguation of "jump to def" to those managed by popwin:
+(push "*xref*" popwin:special-display-config)
+
+;; the desktop package doesn't play well with the server or whatever
+;; so I'm using workgroups2 instead
+(require 'workgroups2)
+(setq wg-session-file "~/.emacs.d/workgroups")
+(setq wg-prefix-key (kbd "C-c w"))
+(workgroups-mode 1)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Neotree
+
+(require 'all-the-icons)
+(require 'neotree)
+(global-set-key [f8] #'neotree-toggle)
+(setq neo-theme (if window-system 'icons 'arrow))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Theme and font tweaks
+
+(require 'doom-themes)
+(setq doom-enable-brighter-comments t)
+(load-theme 'doom-one t)
+(add-hook 'find-file-hook #'doom-buffer-mode)
+(add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+
+(defun doom-theme-cleanup (theme &optional no-confirm no-enable)
+  "Removes hooks which could conflict with other themes, etc."
+  (when (not (member theme '(doom-one doom-molokai doom-one-light)))
+    (message "Removing hooks")
+    (remove-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+    (remove-hook 'find-file-hook #'doom-buffer-mode)
+    ;; Remove ourselves from load-theme.
+    ;; BUT THEN: we need to call advice-add upon loading the theme...
+    ;; (advice-remove 'load-theme #'doom-theme-cleanup)
+    ;; do more stuff...
+    ;; HACK: this face was added by the hook and should be removed
+    ;; (set-face-background 'doom-minibuffer-active "#ffffff")
+    ;; UPDATE: Instead use disable-enabled-themes below
+    ))
+(advice-add 'load-theme :after #'doom-theme-cleanup)
+
+;; This helps cleaning up the mess that custom themes leave behind
+;; when another one loads. See:
+;; http://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme
+(defun disable-enabled-themes (theme &optional no-confirm no-enable)
+  (mapcar #'disable-theme custom-enabled-themes))
+(advice-add 'load-theme :before #'disable-enabled-themes)
+
+
+;; No effect (var is read only?):
+;; (custom-reevaluate-setting 'minibuffer-prompt-properties)
+
+; Height is in 10ths of pt.
+(cond ((string-prefix-p "PelBook" system-name) 
+       (set-face-attribute 'default nil :family "Menlo" :height 130
+                                        :weight 'regular))
+      ((string-prefix-p "PelMac" system-name)
+       (set-face-attribute 'default nil :family "Menlo" :height 160))
+      ((string-prefix-p "ingwer" system-name)
+       (set-face-attribute 'default nil :family "Ubuntu mono" :height 140)))
+
+(blink-cursor-mode 0)
+
+; Minibuffer
+;;(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup)
+;;(defun my-minibuffer-setup ()
+;;       (set (make-local-variable 'face-remapping-alist)
+;;           '((default :height 1.2))))
+
+;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 177) (height . 53)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc
+
+(setq
+ ;; makes killing/yanking interact with the clipboard
+ x-select-enable-clipboard t
+ ;; I'm actually not sure what this does but it's recommended?
+ x-select-enable-primary t
+ ;; Save clipboard strings into kill ring before replacing them.
+ ;; When one selects something in another program to paste it into Emacs,
+ ;; but kills something in Emacs before actually pasting it,
+ ;; this selection is gone unless this variable is non-nil
+ save-interprogram-paste-before-kill t
+ ;; Shows all options when running apropos. For more info,
+ ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
+ apropos-do-all t
+ ;; Mouse yank commands yank at point instead of at click.
+ mouse-yank-at-point t
+ ;; no bell
+ ring-bell-function 'ignore)
+
+;; don't pop up font menu
+(global-set-key (kbd "s-t") '(lambda () (interactive)))
+
+;; Changes all yes/no questions to y/n type
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit config
+
+;; Better colors for blame mode
+(with-eval-after-load "magit-blame"
+  (setq doom-one-modeline-activated-fg-color "#BBB9A7")
+  (setq doom-one-bg-color "#282C34")
+  (set-face-attribute 'magit-blame-heading nil
+		      :background doom-one-bg-color
+		      :foreground doom-one-modeline-activated-fg-color
+		      :slant 'italic
+                      :weight 'regular
+		      :height 0.9))
+
+;; hide and show sections using the same keys as for HideShow
+(with-eval-after-load "magit-mode"
+  (define-key magit-mode-map (kbd "C-M-<left>") #'magit-section-hide)
+  (define-key magit-mode-map (kbd "C-M-<right>") #'magit-section-show)
+  (define-key magit-mode-map (kbd "S-C-M-<left>")
+    (lambda () (interactive) (magit-section-hide-children magit-root-section)))
+  (define-key magit-mode-map (kbd "S-C-M-<right>")
+    (lambda () (interactive) (magit-section-show-children magit-root-section))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Mouse config
+
+;; Scrolling:
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; two lines at a time    
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+(global-set-key (kbd "<wheel-right>") (lambda () (interactive) (scroll-left 2)))
+(global-set-key (kbd "<double-wheel-right>") (lambda () (interactive) (scroll-left 4)))
+(global-set-key (kbd "<triple-wheel-right>") (lambda () (interactive) (scroll-left 8)))
+(global-set-key (kbd "<wheel-left>") (lambda () (interactive) (scroll-right 2)))
+(global-set-key (kbd "<double-wheel-left>") (lambda () (interactive) (scroll-right 4)))
+(global-set-key (kbd "<triple-wheel-left>") (lambda () (interactive) (scroll-right 8)))
+
+
+;; Browsing code with xref:
+(defmacro mdb-my-func-mouse (func)
+  ;; Save some keystrokes
+  `(lambda (event)
+    (interactive "e")
+    (progn
+      (goto-char (posn-point (event-end event)))
+      (let ((sy (symbol-at-point)))
+        (,func (if (symbolp sy) (symbol-name sy) sy))))))
+
+(global-set-key (kbd "C-<down-mouse-1>") nil)
+(global-set-key (kbd "M-<down-mouse-1>") nil)
+(global-set-key (kbd "s-<mouse-1>") (mdb-my-func-mouse xref-find-definitions))
+;; FIXME: this doesn't always work as expected
+(global-set-key (kbd "M-<mouse-1>") (mdb-my-func-mouse xref-find-apropos))
