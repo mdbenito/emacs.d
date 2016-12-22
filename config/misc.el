@@ -31,3 +31,33 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
   (setq tramp-default-method "ssh"))
 (eval-after-load 'paradox
   (setq paradox-github-token (mbd-string-from-file "~/.emacs.d/private/paradox-token")))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit config
+
+;; Better colors for blame mode
+(with-eval-after-load "magit-blame"
+  (setq doom-one-modeline-activated-fg-color "#BBB9A7")
+  (setq doom-one-bg-color "#282C34")
+  (set-face-attribute 'magit-blame-heading nil
+		      :background doom-one-bg-color
+		      :foreground doom-one-modeline-activated-fg-color
+		      :slant 'italic
+                      :weight 'regular
+		      :height 0.9))
+
+;; Some nice shortcuts
+(with-eval-after-load "magit-mode"
+  (global-unset-key (kbd "s-m"))
+  (global-set-key (kbd "s-m m") #'magit-status)
+  (global-set-key (kbd "s-m l") #'magit-log)
+  (global-set-key (kbd "s-m f") #'magit-log-buffer-file)
+  (global-set-key (kbd "s-m b") #'magit-blame)
+  ;; hide and show sections using the same keys as for HideShow
+  (define-key magit-mode-map (kbd "S-C-M-<left>")
+    (lambda () (interactive)
+      (magit-section-hide-children magit-root-section)))
+  (define-key magit-mode-map (kbd "S-C-M-<right>")
+    (lambda () (interactive)
+      (magit-section-show-children magit-root-section))))
