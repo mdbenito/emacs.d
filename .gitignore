@@ -7,5 +7,5 @@ projectile-bookmarks.eld
 projectile.cache
 auto-save-list
 backups
-config/paradox-token
+private
 *.elc
