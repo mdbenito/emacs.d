@@ -48,9 +48,10 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
 		      :height 0.9))
 
 ;; Some nice shortcuts
+;; FIXME: the global shortcuts won't load after magit is started once!
 (with-eval-after-load "magit-mode"
   (global-unset-key (kbd "s-m"))
-  (global-set-key (kbd "s-m m") #'magit-status)
+  (global-set-key (kbd "s-m s") #'magit-status)
   (global-set-key (kbd "s-m l") #'magit-log)
   (global-set-key (kbd "s-m f") #'magit-log-buffer-file)
   (global-set-key (kbd "s-m b") #'magit-blame)
