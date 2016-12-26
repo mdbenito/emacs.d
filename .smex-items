@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- wg-open-session
- dockerfile-build-buffer
- server-start
- package-list-packages
- package-autoremove
- ido-at-point-mode
+ python-mode
+ popwin:popup-buffer
+ popwin:find-file
+ popwin:messages
  rgrep
+ load-theme
+ package-list-packages
 )
 
 ;; ----- smex-data -----
@@ -30,7 +30,7 @@
  (tetris . 1)
  (paredit-mode . 18)
  (save-buffer . 1)
- (wg-save-session . 11)
+ (wg-save-session . 13)
  (grep . 6)
  (show-paren-mode . 4)
  (delete-selection-mode . 2)
@@ -58,7 +58,7 @@
  (cider-stacktrace-mode . 2)
  (pwd . 1)
  (cd . 2)
- (wg-open-session . 10)
+ (wg-open-session . 14)
  (wg-save-session-as . 2)
  (ocodo-svg-modelines-init . 1)
  (smt/set-theme . 13)
@@ -82,7 +82,7 @@
  (smooth-scrolling-mode . 3)
  (do-smooth-scroll . 1)
  (dired . 2)
- (rgrep . 45)
+ (rgrep . 58)
  (imenu . 2)
  (hs-minor-mode . 3)
  (hs-hide-all . 2)
@@ -94,7 +94,7 @@
  (hs-show-block . 2)
  (hs-show-all . 1)
  (next-multiframe-window . 3)
- (tramp-version . 1)
+ (tramp-version . 2)
  (package-autoremove . 5)
  (doom-buffer-mode . 20)
  (customize-option . 1)
@@ -121,7 +121,7 @@
  (magit-blame-mode . 1)
  (nslookup-host . 1)
  (magit-diff . 1)
- (magit-status . 13)
+ (magit-status . 15)
  (visit-tags-table . 1)
  (magit-tag . 1)
  (goto-line . 2)
@@ -137,7 +137,7 @@
  (tabbar-forward-group . 3)
  (mc/mark-all-in-region . 2)
  (wg-create-workgroup . 2)
- (paradox-list-packages . 1)
+ (paradox-list-packages . 3)
  (profiler-start . 1)
  (profiler-report . 1)
  (profiler-stop . 1)
@@ -158,4 +158,10 @@
  (ido-at-point-mode . 5)
  (completion-help-at-point . 2)
  (dockerfile-build-buffer . 2)
+ (xref-find-apropos . 1)
+ (popwin:messages . 1)
+ (popwin:popup-buffer . 3)
+ (popwin:find-file . 1)
+ (python-menu . 1)
+ (python-mode . 1)
 )

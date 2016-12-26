@@ -7,7 +7,19 @@
 ;; command ‘winner-undo’.  By default this one is bound to the key
 ;; sequence ‘C-c <left>’.  If you change your mind (while undoing),
 ;; you can press ‘C-c <right>’ (calling ‘winner-redo’)."
-(winner-mode 1)
+;;;;; No need for winner-mode if using workgroups2
+;(winner-mode 1)
+
+(require 'workgroups2)
+(setq wg-session-file     "~/.emacs.d/workgroups"
+      wg-prefix-key                 (kbd "C-c w")
+      wg-emacs-exit-save-behavior           'save ; 'save 'ask or nil
+      wg-workgroups-mode-exit-save-behavior 'save ; 'save 'ask or nil
+      wg-mode-line-display-on                 nil)
+;; FIXME: redo these with the prefix
+(define-key workgroups-mode-map (kbd "C-c w z") #'wg-undo-wconfig-change)
+(define-key workgroups-mode-map (kbd "C-c w Z") #'wg-redo-wconfig-change)
+(workgroups-mode 1)
 
 ;; Full path in title bar
 (setq-default frame-title-format "%b (%f)")
@@ -63,13 +75,6 @@
 (popwin-mode 1)
 ;; Add buffer for disambiguation of "jump to def" to those managed by popwin:
 (push "*xref*" popwin:special-display-config)
-
-;; the desktop package doesn't play well with the server or whatever
-;; so I'm using workgroups2 instead
-(require 'workgroups2)
-(setq wg-session-file "~/.emacs.d/workgroups")
-(setq wg-prefix-key (kbd "C-c w"))
-(workgroups-mode 1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
