@@ -16,9 +16,9 @@
       wg-emacs-exit-save-behavior           'save ; 'save 'ask or nil
       wg-workgroups-mode-exit-save-behavior 'save ; 'save 'ask or nil
       wg-mode-line-display-on                 nil)
-;; FIXME: redo these with the prefix
-(define-key workgroups-mode-map (kbd "C-c w z") #'wg-undo-wconfig-change)
-(define-key workgroups-mode-map (kbd "C-c w Z") #'wg-redo-wconfig-change)
+
+(define-key wg-prefixed-map (kbd "z") #'wg-undo-wconfig-change)
+(define-key wg-prefixed-map (kbd "Z") #'wg-redo-wconfig-change)
 (workgroups-mode 1)
 
 ;; Full path in title bar
