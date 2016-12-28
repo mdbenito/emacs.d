@@ -18,6 +18,7 @@
 (add-hook 'after-init-hook #'global-company-mode)
 
 ;; Automagically determines whether we want to indent or autocomplete
+;; FIXME!!! Need to add/fix config for all relevant major modes in custom.el
 (require 'smart-tab)
 (global-smart-tab-mode 1)
 
