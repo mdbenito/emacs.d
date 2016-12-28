@@ -14,7 +14,11 @@
 (add-to-list 'load-path "~/.emacs.d/standalone")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; My stuff
+;; Configuration
+
+;; Customized variables
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 ;; OSX / Linux specific stuff (other than shortcuts)
 (load "system.el")
@@ -38,5 +42,4 @@
 (load "setup-cpp.el")
 (load "setup-python.el")
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+
