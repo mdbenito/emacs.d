@@ -38,5 +38,5 @@
 (load "setup-cpp.el")
 (load "setup-python.el")
 
-(setq custom-file "~/custom.el")
+(setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
