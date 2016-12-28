@@ -38,5 +38,5 @@
 (load "setup-cpp.el")
 (load "setup-python.el")
 
-(setq custom-file "~/mcustom.el")
+(setq custom-file "~/custom.el")
 (load custom-file)
