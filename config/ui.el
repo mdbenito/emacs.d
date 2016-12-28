@@ -75,7 +75,8 @@
 (popwin-mode 1)
 ;; Add buffer for disambiguation of "jump to def" to those managed by popwin:
 (push "*xref*" popwin:special-display-config)
-
+(push "*anaconda-response*" popwin:special-display-config)
+;(push "*Completions*" popwin:special-display-config)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
