@@ -168,6 +168,9 @@
 ;; Changes all yes/no questions to y/n type
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; FIXME: Silly mode icons refuse to work in daemon mode?!?!
+;(eval-after-load #'mode-icons-mode
+;  (mode-icons-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Mouse config
