@@ -26,7 +26,8 @@
      (anaconda-mode . company-complete)
      (c-mode . company-complete)
      (c++-mode . company-complete)
-     (clojure-mode . ac-complete))))
+     (clojure-mode . ac-complete)
+     (sh-mode . company-complete))))
  '(tabbar-mode t nil (tabbar))
  '(tabbar-separator (quote (0.5))))
 

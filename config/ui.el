@@ -150,7 +150,7 @@
 (setq
  ;; makes killing/yanking interact with the clipboard
  x-select-enable-clipboard t
- ;; I'm actually not sure what this does but it's recommended?
+ ;; Non-nil means cutting and pasting uses the primary selection
  x-select-enable-primary t
  ;; Save clipboard strings into kill ring before replacing them.
  ;; When one selects something in another program to paste it into Emacs,
@@ -161,7 +161,7 @@
  ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
  apropos-do-all t
  ;; Mouse yank commands yank at point instead of at click.
- mouse-yank-at-point t
+ ;; mouse-yank-at-point t
  ;; no bell
  ring-bell-function 'ignore)
 

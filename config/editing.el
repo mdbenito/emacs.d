@@ -13,14 +13,18 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
+(autoload 'bash-completion-dynamic-complete "bash-completion"
+  "BASH completion hook")
+(add-hook 'shell-dynamic-complete-functions
+          #'bash-completion-dynamic-complete)
+
 ; Global complete any
 (require 'company)
 (add-hook 'after-init-hook #'global-company-mode)
 
-;; Automagically determines whether we want to indent or autocomplete
-;; FIXME!!! Need to add/fix config for all relevant major modes in custom.el
-(require 'smart-tab)
-(global-smart-tab-mode 1)
+;; Smart-Tab: automagically determines whether we want to indent or
+;; autocomplete. This is activated and configured in custom.el. NOTE:
+;; Need to add/fix config for all relevant major modes in custom.el
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
