@@ -43,9 +43,8 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Multiple cursors magic
-(require 'multiple-cursors)
+;(require 'multiple-cursors)  ; in custom.el
 (global-set-key (kbd "<f6>") #'mc/mark-all-dwim)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting lines and regions
@@ -86,22 +85,6 @@
 ;(setq electric-indent-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Operations in lines
-
-;; Moving lines around
-(require 'move-lines)
-(move-lines-binding)  ;; c-<up> and c-<down> move lines/regions
-
-;; Moving inside lines
-(global-set-key (kbd "s-<left>") #'move-beginning-of-line)
-(global-set-key (kbd "s-<right>") #'move-end-of-line)
-(global-set-key (kbd "<home>") #'move-beginning-of-line)
-(global-set-key (kbd "<end>") #'move-end-of-line)
-(global-set-key (kbd "s-<home>") #'beginning-of-buffer)
-(global-set-key (kbd "s-<end>") #'end-of-buffer)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Files and backups
 
 ;; Point goes to the last place when visiting a file
@@ -115,6 +98,16 @@
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory
                                                "backups"))))
 (setq auto-save-default nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Activate WhichFunction and set color
+(add-hook 'prog-mode-hook #'which-function-mode)
+
+(eval-after-load #'which-function-mode
+  (custom-set-faces
+  `(which-func
+    ((t (:foreground ,(face-foreground 'font-lock-function-name-face)))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -143,6 +136,7 @@
 (define-key prog-mode-map (kbd "M-<left>") #'backward-symbol)
 (define-key prog-mode-map (kbd "M-<right>") #'forward-symbol)
 
+(global-set-key (kbd "M-p") #'fill-paragraph)
 
 ;; Mac shortcuts for linux:
 (if (eq system-type 'gnu/linux)
@@ -201,6 +195,22 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Operations in lines
+
+;; Moving lines around
+(require 'move-lines)
+(move-lines-binding)  ;; c-<up> and c-<down> move lines/regions
+
+;; Moving inside lines
+(global-set-key (kbd "s-<left>") #'move-beginning-of-line)
+(global-set-key (kbd "s-<right>") #'move-end-of-line)
+(global-set-key (kbd "<home>") #'move-beginning-of-line)
+(global-set-key (kbd "<end>") #'move-end-of-line)
+(global-set-key (kbd "s-<home>") #'beginning-of-buffer)
+(global-set-key (kbd "s-<end>") #'end-of-buffer)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HideShow rebindings (shows/hides code blocks)
 (require 'hideshow)
 (eval-after-load #'hs-minor-mode
@@ -215,16 +225,6 @@
     (define-key hs-minor-mode-map (kbd "<S-return>") #'hs-toggle-hiding)))
 
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Activate WhichFunction and set color
-(add-hook 'prog-mode-hook #'which-function-mode)
-
-(eval-after-load #'which-function-mode
-  (custom-set-faces
-  `(which-func
-    ((t (:foreground ,(face-foreground 'font-lock-function-name-face)))))))
-
 
 ;;;; Global keymaps
 ;; (defmacro defkbalias (new old)
