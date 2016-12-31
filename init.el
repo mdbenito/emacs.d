@@ -6,7 +6,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
-;; Load and activate emacs packages. This also sets the load path.
+;; Activate emacs packages (reads autoloads). This also sets the load path.
 (package-initialize)
 
 ;; Add dirs to load path for (load "blah")

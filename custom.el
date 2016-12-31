@@ -28,6 +28,7 @@
      (c++-mode . company-complete)
      (clojure-mode . ac-complete)
      (lisp-interaction-mode . company-complete)
+     (inferior-emacs-lisp-mode . company-complete)
      (sh-mode . company-complete))))
  '(tabbar-mode t nil (tabbar))
  '(tabbar-separator (quote (0.5))))
