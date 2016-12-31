@@ -98,6 +98,12 @@
 (add-hook 'find-file-hook #'doom-buffer-mode)
 (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
 
+;; Brighter modeline to tell windows apart
+(custom-theme-set-faces
+ 'doom-one
+ `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
+ `(mode-line-inactive ((t (:foreground "#bbc2cf" :background "#333333")))))
+
 (defun doom-theme-cleanup (theme &optional no-confirm no-enable)
   "Removes hooks which could conflict with other themes, etc."
   (when (not (member theme '(doom-one doom-molokai doom-one-light)))
