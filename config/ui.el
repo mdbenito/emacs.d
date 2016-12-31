@@ -82,7 +82,7 @@
 
 (require 'all-the-icons)
 (require 'neotree)
-(global-set-key [f8] #'neotree-toggle)
+(global-set-key [f5] #'neotree-toggle)
 (setq neo-theme (if window-system 'icons 'arrow))
 
 

@@ -12,6 +12,13 @@
 (setq inhibit-startup-message t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Debugger(s)
+
+(global-set-key (kbd "<f8>") #'gud-step)
+(global-set-key (kbd "<f9>") #'gud-next)
+(global-set-key (kbd "s-b") #'gud-break)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Remote access
 (defun mbd-string-chomp (str)
   "Chomp leading and tailing whitespace from STR.
@@ -30,7 +37,8 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
 (eval-after-load 'tramp
   (setq tramp-default-method "ssh"))
 (eval-after-load 'paradox
-  (setq paradox-github-token (mbd-string-from-file "~/.emacs.d/private/paradox-token")))
+  (setq paradox-github-token
+        (mbd-string-from-file "~/.emacs.d/private/paradox-token")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
