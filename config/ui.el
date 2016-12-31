@@ -178,6 +178,12 @@
 ;(eval-after-load #'mode-icons-mode
 ;  (mode-icons-mode t))
 
+(delight '((doom-buffer-mode "")
+           (workgroups-mode "")
+           (smart-tab-mode "")
+           (hs-minor-mode "")
+           (page-break-lines-mode "")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Mouse config
 
