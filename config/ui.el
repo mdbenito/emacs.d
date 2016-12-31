@@ -67,18 +67,15 @@
 
 (global-set-key (kbd "<f12>") #'toggle-window-dedicated)
 
-;; popwin lets us have any special buffers (by default, *Help*, *Completions*,
-;; *compilation*, and *Occur*, specified in popwin:special-display-config) to
-;; always show in a popup window. One can close it by typing C-g or selecting
-;; other windows.
+;; popwin lets us have any special buffers (specified in
+;; popwin:special-display-config) to always show in a popup
+;; window. One can close it by typing C-g or selecting other windows.
 (require 'popwin)
 (popwin-mode 1)
-;; Add buffer for disambiguation of "jump to def" to those managed by popwin:
-(push "*xref*" popwin:special-display-config)
-(push "*Anaconda*" popwin:special-display-config)
-(push "*anaconda-mode*" popwin:special-display-config)
-(push "*anaconda-response*" popwin:special-display-config)
-(push "*Completions*" popwin:special-display-config)
+;; Add obnoxious buffers to those managed by popwin:
+(dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response" "gud"
+                "Completions" ))
+  (push (string-join `("*" ,name "*")) popwin:special-display-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
