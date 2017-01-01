@@ -5,7 +5,7 @@
 (eval-after-load "company"
   '(add-to-list 'company-backends 'company-anaconda))
 
-(eval-after-load 'python-mode
+(with-eval-after-load 'python-mode
   (load-library "realgud")
   (define-key python-mode-map (kbd "s-d") #'realgud:pdb))
 
