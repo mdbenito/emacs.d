@@ -22,3 +22,7 @@
 (define-key lisp-interaction-mode-map (kbd "s-S-<return>") 'eval-buffer)
 (define-key lisp-interaction-mode-map (kbd "C-<return>") 'eval-last-sexp)
 (define-key lisp-interaction-mode-map (kbd "s-<return>") 'eval-last-sexp)
+
+(define-key emacs-lisp-mode-map (kbd "M-<mouse-1>")
+  (mdb-my-func-mouse (lambda (s) (describe-symbol (intern-soft s)))))
+(define-key emacs-lisp-mode-map (kbd "M-<f1>") #'describe-symbol)

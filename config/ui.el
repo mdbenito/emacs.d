@@ -224,5 +224,3 @@ Removes hooks which could conflict with other themes, etc."
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "s-<mouse-1>")
                 (mdb-my-func-mouse xref-find-definitions))
-(define-key emacs-lisp-mode-map (kbd "M-<mouse-1>")
-  (mdb-my-func-mouse (lambda (s) (describe-function (intern-soft s)))))
