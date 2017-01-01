@@ -1,10 +1,13 @@
 ;;
 (add-hook 'python-mode-hook #'electric-pair-mode)
-
 (add-hook 'python-mode-hook #'anaconda-mode)
 
 (eval-after-load "company"
   '(add-to-list 'company-backends 'company-anaconda))
+
+(eval-after-load 'python-mode
+  (load-library "realgud")
+  (define-key python-mode-map (kbd "s-d") #'realgud:pdb))
 
 (with-eval-after-load "realgud"  
   (puthash "print" "pp %s" realgud:pdb-command-hash)
@@ -26,7 +29,6 @@
     ;; placeholder
     (describe-minor-mode 'realgud-short-key-mode))
   
-  (define-key python-mode-map (kbd "s-d") #'realgud:pdb)
   (define-key realgud:shortkey-mode-map "?" #'realgud-short-key-mode-help)
   (define-key realgud:shortkey-mode-map  "p" #'realgud:cmd-print)
   (define-key realgud:shortkey-mode-map "P" #'realgud:pdb-cmd-print-locals)
