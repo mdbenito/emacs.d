@@ -45,12 +45,12 @@
 (setq nlinum-highlight-current-line t)
 
 ;; Draw hrulers instead of ^L
-(require 'page-break-lines)
 (global-page-break-lines-mode 1)
 
 ;; Customizations for tabbar
 (load "tabbar-custom.el")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pinning windows. See:
 ;; http://stackoverflow.com/questions/43765/pin-emacs-buffers-to-windows-for-cscope
 (defun toggle-window-dedicated ()
@@ -67,6 +67,7 @@
 
 (global-set-key (kbd "<f12>") #'toggle-window-dedicated)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; popwin lets us have any special buffers (specified in
 ;; popwin:special-display-config) to always show in a popup
 ;; window. One can close it by typing C-g or selecting other windows.
@@ -79,7 +80,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
-
 (require 'all-the-icons)
 (require 'neotree)
 (global-set-key [f5] #'neotree-toggle)
@@ -168,8 +168,9 @@
  ;; no bell
  ring-bell-function 'ignore)
 
-;; don't pop up font menu
-(global-set-key (kbd "s-t") '(lambda () (interactive)))
+;; Useless keys
+(global-unset-key (kbd "s-t"))   ; don't pop up font menu
+(global-unset-key (kbd "<f10>")) ; don't open the menu bar
 
 ;; Changes all yes/no questions to y/n type
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -178,6 +179,7 @@
 ;(eval-after-load #'mode-icons-mode
 ;  (mode-icons-mode t))
 
+;; Remove useless minor mode names from modeline
 (delight '((doom-buffer-mode "")
            (workgroups-mode "")
            (smart-tab-mode "")
@@ -202,17 +204,7 @@
 
 
 ;; Browsing code with xref:
-(defmacro mdb-my-func-mouse (func)
-  ;; Save some keystrokes
-  `(lambda (event)
-    (interactive "e")
-    (progn
-      (goto-char (posn-point (event-end event)))
-      (let ((sy (symbol-at-point)))
-        (,func (if (symbolp sy) (symbol-name sy) sy))))))
-
-(global-set-key (kbd "C-<down-mouse-1>") nil)
-(global-set-key (kbd "M-<down-mouse-1>") nil)
+(global-unset-key (kbd "C-<down-mouse-1>"))
+(global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "s-<mouse-1>") (mdb-my-func-mouse xref-find-definitions))
-;; FIXME: this doesn't always work as expected
-(global-set-key (kbd "M-<mouse-1>") (mdb-my-func-mouse xref-find-apropos))
+(define-key emacs-lisp-mode-map (kbd "M-<mouse-1>") (mdb-my-func-mouse describe-function))

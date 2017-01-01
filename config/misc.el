@@ -11,6 +11,16 @@
 ;; Go straight to scratch buffer on startup
 (setq inhibit-startup-message t)
 
+;; I use this elsewhere
+(defmacro mdb-my-func-mouse (func)
+  "Calls FUNC with the symbol under a mouse click."
+  `(lambda (event)
+    (interactive "e")
+    (progn  ;; if we save-excursion this won't work with anaconda-mode-*
+      (goto-char (posn-point (event-end event)))
+      (let ((sy (symbol-at-point)))
+        (,func sy)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Debugger(s)
 

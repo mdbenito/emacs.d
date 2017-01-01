@@ -20,6 +20,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; Whatever
+(load "misc.el")
+
 ;; OSX / Linux specific stuff (other than shortcuts)
 (load "system.el")
 
@@ -32,8 +35,6 @@
 ;; These customizations make editing a bit nicer.
 (load "editing.el")
 
-;; Whatever
-(load "misc.el")
 
 ;; Language-specific
 (load "setup-elisp.el")
