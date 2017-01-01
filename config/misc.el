@@ -28,6 +28,88 @@
 ;; (global-set-key (kbd "<f9>") #'gud-next)
 ;; (global-set-key (kbd "s-b") #'gud-break)
 
+(with-eval-after-load 'realgud-send
+
+  ;; Fix for TRAMP conections (should make a PR)
+  
+  (defun realgud-expand-format (fmt-str &optional opt-str opt-buffer)
+    "Expands commands format characters inside FMT-STR.
+OPT-STR is an optional string (used with %p and %s).  Values are
+taken from current buffer, or OPT-BUFFER if non-nil.  Some
+%-escapes in the string arguments are expanded.  These are:
+
+  %f -- Name without directory of current source file.
+  %F -- Name without directory or extension of current source file.
+  %x -- Name of current source file.
+  %X -- Expanded name of current source file.
+  %d -- Directory of current source file.
+  %l -- Number of current source line.
+  %c -- Fully qualified class name derived from the expression
+        surrounding point.
+  %p -- Value of OPT-STR, converted to string using `int-to-string'
+  %s -- Value of OPT-STR.
+
+%p and %s are replaced by an empty string if OPT-STR is nil."
+    (let* ((buffer (or opt-buffer (current-buffer)))
+           (srcbuf (realgud-get-srcbuf buffer))
+           (srcfname (and srcbuf (buffer-file-name srcbuf)))
+           (tramp-vec (and srcfname (tramp-dissect-file-name srcfname)))
+           (src-file-name (if tramp-vec (tramp-file-name-localname tramp-vec)
+                            srcfname))
+           ;; (src-file-name (and srcbuf (buffer-file-name srcbuf)))
+           result)
+      (while (and fmt-str
+                  (let ((case-fold-search nil))
+                    (string-match "\\([^%]*\\)%\\([dfFlpxXs]\\)" fmt-str)))
+        (let* ((key-str (match-string 2 fmt-str))
+               (key (string-to-char key-str)))
+          (setq result
+                (concat
+                 result (match-string 1 fmt-str)
+                 (cond
+                  ((cdr (assq key realgud-expand-format-overrides)))
+                  ((eq key ?d)
+                   (or (and src-file-name
+                            (file-name-directory src-file-name))
+                       "*source-file-not-found-for-%d"))
+                  ((eq key ?f)
+                   (or (and src-file-name
+                            (file-name-nondirectory src-file-name))
+                       "*source-file-not-found-for-%f*"))
+                  ((eq key ?F)
+                   (or (and src-file-name
+                            (file-name-sans-extension
+                             (file-name-nondirectory src-file-name)))
+                       "*source-file-not-found-for-%F"))
+                  ((eq key ?l)
+                   (if srcbuf
+                       (with-current-buffer srcbuf
+                         (int-to-string
+                          (save-restriction
+                            (widen)
+                            (+ (count-lines (point-min) (point))
+                               (if (bolp) 1 0)))))
+                     "source-buffer-not-found-for-%l"))
+                  ((eq key ?x)
+                   (or (and src-file-name src-file-name)
+                       "*source-file-not-found-for-%x"))
+                  ((eq key ?X)
+                   (or (and src-file-name (expand-file-name src-file-name))
+                       "*source-file-not-found-for-%X"))
+                  ;; ((eq key ?e)
+                  ;;  (gud-find-expr))
+                  ;; ((eq key ?a)
+                  ;;  (gud-read-address))
+                  ;; ((eq key ?c)
+                  ;;   (gud-find-class srcbuf))
+                  ((eq key ?p) (if opt-str (int-to-string opt-str) ""))
+                  ((eq key ?s) (or opt-str ""))
+                  (t key)))))
+        (setq fmt-str (substring fmt-str (match-end 2))))
+      ;; There might be text left in FMT-STR when the loop ends.
+      (concat result fmt-str)))
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Remote access
 (defun mbd-string-chomp (str)
