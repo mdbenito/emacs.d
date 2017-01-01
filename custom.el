@@ -18,6 +18,7 @@
    (quote
     (realgud delight anaconda-mode company-anaconda bash-completion powerline 4clojure magit magit-popup neotree page-break-lines popup projectile rtags popup-complete popwin cider ac-cider company company-shell conda ido-at-point ido-completing-read+ magit-filenotify magit-find-file magit-gh-pulls magit-gitflow magithub rotate cython-mode multiple-cursors paradox smart-tab nlinum cmake-ide cmake-mode dockerfile-mode all-the-icons doom-themes tabbar markdown-mode markdown-preview-eww markdown-toc sr-speedbar smooth-scrolling workgroups2 tagedit smex rainbow-delimiters paredit move-text modern-cpp-font-lock ido-ubiquitous flycheck-irony flycheck-cython flycheck-clojure flycheck-clangcheck exec-path-from-shell darcula-theme cpputils-cmake company-statistics company-irony-c-headers company-irony company-c-headers clojure-mode-extra-font-locking mode-icons)))
  '(paradox-automatically-star nil)
+ '(realgud-bp-fringe-indicator-style (quote (realgud-bp-filled . realgud-bp-hollow)))
  '(smart-tab-completion-functions-alist
    (quote
     ((emacs-lisp-mode . company-complete)
@@ -38,4 +39,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ '(realgud-backtrace-number ((t (:foreground "white" :weight bold))))
+ '(realgud-bp-line-disabled-face ((t (:background "gray29"))))
+ '(realgud-overlay-arrow1 ((t (:foreground "yellow" :weight bold))))
+ '(realgud-overlay-arrow2 ((t (:foreground "yellow3"))))
+ '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold))))
+ '(which-func ((t (:foreground "(face-foreground 'font-lock-function-name-face)")))))
