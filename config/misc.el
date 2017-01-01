@@ -19,14 +19,14 @@
     (progn  ;; if we save-excursion this won't work with anaconda-mode-*
       (goto-char (posn-point (event-end event)))
       (let ((sy (symbol-at-point)))
-        (,func sy)))))
+        (,func (symbol-name sy))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Debugger(s)
-
-(global-set-key (kbd "<f8>") #'gud-step)
-(global-set-key (kbd "<f9>") #'gud-next)
-(global-set-key (kbd "s-b") #'gud-break)
+;; Not necessary if using realgud
+;; (global-set-key (kbd "<f8>") #'gud-step)
+;; (global-set-key (kbd "<f9>") #'gud-next)
+;; (global-set-key (kbd "s-b") #'gud-break)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Remote access

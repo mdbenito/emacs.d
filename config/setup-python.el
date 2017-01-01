@@ -6,12 +6,33 @@
 (eval-after-load "company"
   '(add-to-list 'company-backends 'company-anaconda))
 
-(eval-after-load 'python-mode
-  (define-key python-mode-map (kbd "s-d") #'pdb)
-  (define-key python-mode-map (kbd "<f10>")  ; ugly...
-    (lambda () (interactive) (gud-call "pp locals()"))))
+(with-eval-after-load "realgud"  
+  (puthash "print" "pp %s" realgud:pdb-command-hash)
 
-;; anaconda-mode-show-doc and -find-definitions take no arguments...
+  (defun realgud:cmd-print (arg)
+    "Pretty print the value of an expression."
+    (interactive `(,(read-string (format "Print (%s): " (symbol-at-point))
+                                 nil nil (symbol-name (symbol-at-point)))))
+    (realgud:cmd-run-command arg "print"))
+  
+  (defun realgud:pdb-cmd-print-locals ()
+    "Prints the value of all local variables."
+    (interactive)
+    ; FIXME: should make sure that this is only called for python debuggers
+    (realgud:cmd-run-command "locals()" "print"))
+
+  (defun realgud-short-key-mode-help ()
+    (interactive)
+    ;; placeholder
+    (describe-minor-mode 'realgud-short-key-mode))
+  
+  (define-key python-mode-map (kbd "s-d") #'realgud:pdb)
+  (define-key realgud:shortkey-mode-map "?" #'realgud-short-key-mode-help)
+  (define-key realgud:shortkey-mode-map  "p" #'realgud:cmd-print)
+  (define-key realgud:shortkey-mode-map "P" #'realgud:pdb-cmd-print-locals)
+  (define-key realgud:shortkey-mode-map (kbd "<double-mouse-1>")
+    (mdb-my-func-mouse realgud:cmd-print)))
+
 (with-eval-after-load 'anaconda-mode
   (define-key anaconda-mode-map (kbd "M-<mouse-1>")
     (mdb-my-func-mouse (lambda (x) (anaconda-mode-show-doc))))

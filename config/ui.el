@@ -195,16 +195,23 @@
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-(global-set-key (kbd "<wheel-right>") (lambda () (interactive) (scroll-left 2)))
-(global-set-key (kbd "<double-wheel-right>") (lambda () (interactive) (scroll-left 4)))
-(global-set-key (kbd "<triple-wheel-right>") (lambda () (interactive) (scroll-left 8)))
-(global-set-key (kbd "<wheel-left>") (lambda () (interactive) (scroll-right 2)))
-(global-set-key (kbd "<double-wheel-left>") (lambda () (interactive) (scroll-right 4)))
-(global-set-key (kbd "<triple-wheel-left>") (lambda () (interactive) (scroll-right 8)))
-
+(global-set-key (kbd "<wheel-right>")
+                (lambda () (interactive) (scroll-left 2)))
+(global-set-key (kbd "<double-wheel-right>")
+                (lambda () (interactive) (scroll-left 4)))
+(global-set-key (kbd "<triple-wheel-right>")
+                (lambda () (interactive) (scroll-left 8)))
+(global-set-key (kbd "<wheel-left>")
+                (lambda () (interactive) (scroll-right 2)))
+(global-set-key (kbd "<double-wheel-left>")
+                (lambda () (interactive) (scroll-right 4)))
+(global-set-key (kbd "<triple-wheel-left>")
+                (lambda () (interactive) (scroll-right 8)))
 
 ;; Browsing code with xref:
 (global-unset-key (kbd "C-<down-mouse-1>"))
 (global-unset-key (kbd "M-<down-mouse-1>"))
-(global-set-key (kbd "s-<mouse-1>") (mdb-my-func-mouse xref-find-definitions))
-(define-key emacs-lisp-mode-map (kbd "M-<mouse-1>") (mdb-my-func-mouse describe-function))
+(global-set-key (kbd "s-<mouse-1>")
+                (mdb-my-func-mouse xref-find-definitions))
+(define-key emacs-lisp-mode-map (kbd "M-<mouse-1>")
+  (mdb-my-func-mouse (lambda (s) (describe-function (intern-soft s)))))
