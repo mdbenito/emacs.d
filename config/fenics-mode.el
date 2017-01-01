@@ -21,11 +21,11 @@
 (defun fenics/build-dependencies (ignored)
   "HACK!"
   (when (fenics/remote-file-p)
-    (with-temp-message (concat "Bulding " (string-join fenics/dependencies " ") "...")
+    (with-temp-message (concat "Bulding " (mapconcat #'indentity nfenics/dependencies " ") "...")
       (save-some-buffers #'fenics/remote-file-p)
       (let* (;;(docker-cmd "docker exec -u fenics fenics-dev bash -c ")
              (bash-cmd (concat ". /home/fenics/fenics.env.conf && /home/fenics/bin/fenics-build "
-                               (string-join fenics/dependencies " "))))
+                               (mapconcat #'indentity fenics/dependencies " "))))
         ;; Note: TRAMP runs commands remotely, so
         ;; (shell-command (concat docker-cmd "'" bash-cmd "'") "*fenics-build*" "*fenics-build*")
         (shell-command bash-cmd fenics/output-buffer fenics/output-buffer)))))
@@ -43,7 +43,6 @@ Key bindings:
 \\{fenics-minor-mode-map}"
   :lighter " fen"
   :keymap fenics-minor-mode-map
-  :global nil
   (if fenics-minor-mode
       (advice-add #'pdb :before #'fenics/build-dependencies)
     (advice-remove #'pdb #'fenics/build-dependencies)))

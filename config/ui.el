@@ -79,7 +79,7 @@
 ;; Add obnoxious buffers to those managed by popwin:
 (dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response" "gud"
                 "Completions" ))
-  (push (string-join `("*" ,name "*")) popwin:special-display-config))
+  (push (apply #'concat `("*" ,name "*")) popwin:special-display-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
