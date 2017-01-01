@@ -87,24 +87,14 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Theme and font tweaks
+;; Theme tweaks
 
 (require 'doom-themes)
-(setq doom-enable-brighter-comments t)
-(load-theme 'doom-one t)
-(add-hook 'find-file-hook #'doom-buffer-mode)
-(add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
 
-;; Brighter modeline to tell windows apart
-(custom-theme-set-faces
- 'doom-one
- `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
- `(mode-line-inactive ((t (:foreground "#bbc2cf" :background "#333333")))))
-
-(defun doom-theme-cleanup (theme &optional no-confirm no-enable)
+(defun mbd--themes-cleanup (theme &optional no-confirm no-enable)
   "Removes hooks which could conflict with other themes, etc."
   (when (not (member theme '(doom-one doom-molokai doom-one-light)))
-    (message "Removing hooks")
+    (message "Removing doom-one hooks")
     (remove-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
     (remove-hook 'find-file-hook #'doom-buffer-mode)
     ;; Remove ourselves from load-theme.
@@ -115,15 +105,33 @@
     ;; (set-face-background 'doom-minibuffer-active "#ffffff")
     ;; UPDATE: Instead use disable-enabled-themes below
     ))
-(advice-add 'load-theme :after #'doom-theme-cleanup)
+
+(advice-add 'load-theme :after #'mbd--themes-cleanup)
 
 ;; This helps cleaning up the mess that custom themes leave behind
 ;; when another one loads. See:
 ;; http://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme
-(defun disable-enabled-themes (theme &optional no-confirm no-enable)
+(defun mbd--themes-disable-enabled (theme &optional no-confirm no-enable)
   (mapcar #'disable-theme custom-enabled-themes))
-(advice-add 'load-theme :before #'disable-enabled-themes)
+(advice-add 'load-theme :before #'mbd--themes-disable-enabled)
 
+;; Brighter modeline to tell windows apart
+(defun mbd--themes-tweak (theme &optional no-confirm no-enable)
+  (when (equal theme 'doom-one)
+    (setq doom-enable-brighter-comments t)
+    (add-hook 'find-file-hook #'doom-buffer-mode)
+    (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+    (custom-theme-set-faces
+     'doom-one
+     `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
+     `(mode-line-inactive ((t (:foreground "#bbc2cf" :background "#333333")))))))
+
+(advice-add 'load-theme :after #'mbd--themes-tweak)
+
+(load-theme 'doom-one t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Font tweaks
 
 ;; No effect (var is read only?):
 ;; (custom-reevaluate-setting 'minibuffer-prompt-properties)
