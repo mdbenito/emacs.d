@@ -7,7 +7,9 @@
   '(add-to-list 'company-backends 'company-anaconda))
 
 (eval-after-load 'python-mode
-  (define-key python-mode-map (kbd "s-d") #'pdb))
+  (define-key python-mode-map (kbd "s-d") #'pdb)
+  (define-key python-mode-map (kbd "<f10>")  ; ugly...
+    (lambda () (interactive) (gud-call "pp locals()"))))
 
 ;; anaconda-mode-show-doc and -find-definitions take no arguments...
 (with-eval-after-load 'anaconda-mode
