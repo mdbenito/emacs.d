@@ -50,6 +50,9 @@
 ;; Customizations for tabbar
 (load "tabbar-custom.el")
 
+;; Display elisp doc for things in the minibuffer, in the modeline
+(add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pinning windows. See:
 ;; http://stackoverflow.com/questions/43765/pin-emacs-buffers-to-windows-for-cscope
@@ -82,7 +85,7 @@
 ;; Neotree
 (require 'all-the-icons)
 (require 'neotree)
-(global-set-key [f5] #'neotree-toggle)
+(global-set-key (kbd "C-c n") #'neotree-toggle)
 (setq neo-theme (if window-system 'icons 'arrow))
 
 
