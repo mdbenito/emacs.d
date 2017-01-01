@@ -94,42 +94,42 @@
 
 (require 'doom-themes)
 
-(defun mbd--themes-cleanup (theme &optional no-confirm no-enable)
-  "Removes hooks which could conflict with other themes, etc."
-  (when (not (member theme '(doom-one doom-molokai doom-one-light)))
-    (message "Removing doom-one hooks")
-    (remove-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
-    (remove-hook 'find-file-hook #'doom-buffer-mode)
-    ;; Remove ourselves from load-theme.
-    ;; BUT THEN: we need to call advice-add upon loading the theme...
-    ;; (advice-remove 'load-theme #'doom-theme-cleanup)
-    ;; do more stuff...
-    ;; HACK: this face was added by the hook and should be removed
-    ;; (set-face-background 'doom-minibuffer-active "#ffffff")
-    ;; UPDATE: Instead use disable-enabled-themes below
-    ))
-
-(advice-add 'load-theme :after #'mbd--themes-cleanup)
-
-;; This helps cleaning up the mess that custom themes leave behind
-;; when another one loads. See:
-;; http://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme
-(defun mbd--themes-disable-enabled (theme &optional no-confirm no-enable)
-  (mapcar #'disable-theme custom-enabled-themes))
-(advice-add 'load-theme :before #'mbd--themes-disable-enabled)
-
-;; Brighter modeline to tell windows apart
-(defun mbd--themes-tweak (theme &optional no-confirm no-enable)
+(defun mbd--load-theme-before (theme &optional no-confirm no-enable)
+  "Advice for before load-theme."
+  ;; This helps cleaning up the mess that custom themes leave behind
+  ;; when another one loads. See:
+  ;; http://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme
+  (mapcar #'disable-theme custom-enabled-themes)
   (when (equal theme 'doom-one)
-    (setq doom-enable-brighter-comments t)
-    (add-hook 'find-file-hook #'doom-buffer-mode)
-    (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
-    (custom-theme-set-faces
-     'doom-one
-     `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
-     `(mode-line-inactive ((t (:foreground "#bbc2cf" :background "#333333")))))))
+    ;; Brighter modeline to tell windows apart
+    (setq doom-enable-brighter-comments t)))
 
-(advice-add 'load-theme :after #'mbd--themes-tweak)
+(defun mbd--load-theme-after (theme &optional no-confirm no-enable)
+  "Advice for after load-theme.
+Removes hooks which could conflict with other themes, etc."
+  (cond ((not (member theme '(doom-one doom-molokai doom-one-light)))         
+         (message "Removing doom-one hooks")
+         (remove-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+         (remove-hook 'find-file-hook #'doom-buffer-mode)
+           ;; Remove ourselves from load-theme.
+           ;; BUT THEN: we need to call advice-add upon loading the theme...
+           ;; (advice-remove 'load-theme #'doom-theme-cleanup)
+           ;; do more stuff...
+           ;; HACK: this face was added by the hook and should be removed
+           ;; (set-face-background 'doom-minibuffer-active "#ffffff")
+           ;; UPDATE: Instead use disable-enabled-themes below
+           )
+        ((equal theme 'doom-one)
+         (add-hook 'find-file-hook #'doom-buffer-mode)
+         (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+         (custom-theme-set-faces
+          'doom-one
+          `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
+          `(mode-line-inactive ((t (:foreground "#bbc2cf"
+                                                :background "#333333"))))))))
+
+(advice-add 'load-theme :before #'mbd--load-theme-before)
+(advice-add 'load-theme :after #'mbd--load-theme-after)
 
 (load-theme 'doom-one t)
 
