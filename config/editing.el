@@ -155,7 +155,6 @@
       (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
       (global-set-key (kbd "s-z") #'undo)
       (global-set-key (kbd "s-s") #'save-buffer)
-      (global-set-key (kbd "s-w") #'kill-this-buffer)
       (global-set-key (kbd "s-f") #'isearch-forward)))
 
 ;;;; Common sense stuff which also isn't too hard on my hands...
