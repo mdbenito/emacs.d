@@ -28,11 +28,20 @@
 ;; (global-set-key (kbd "<f9>") #'gud-next)
 ;; (global-set-key (kbd "s-b") #'gud-break)
 
-(with-eval-after-load 'realgud-send
-
-  ;; Fix for TRAMP conections (should make a PR)
+(with-eval-after-load "realgud"
+  ;; These need to be set before loading! (e.g. in custom.el) but do they??
+  ;; (custom-set-variables
+  ;;  '(realgud-bp-fringe-indicator-style (quote (realgud-bp-filled . realgud-bp-hollow))))
+  ;; (custom-set-faces
+  ;;  '(realgud-backtrace-number ((t (:foreground "white" :weight bold))))
+  ;;  '(realgud-bp-line-disabled-face ((t (:background "gray29"))))
+  ;;  '(realgud-overlay-arrow1 ((t (e:foreground "yellow" :weight bold))))
+  ;;  '(realgud-overlay-arrow2 ((t (:foreground "yellow3"))))
+  ;;  '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold)))))
   
-  (defun realgud-expand-format (fmt-str &optional opt-str opt-buffer)
+  ;; Fix for TRAMP conections (should make a PR)
+  ;; MBD FIXME: I don't know if this works or even makes sense anymore...
+  (defun BOGUS-realgud-expand-format (fmt-str &optional opt-str opt-buffer)
     "Expands commands format characters inside FMT-STR.
 OPT-STR is an optional string (used with %p and %s).  Values are
 taken from current buffer, or OPT-BUFFER if non-nil.  Some
