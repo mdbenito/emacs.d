@@ -79,15 +79,14 @@
 ;; Add obnoxious buffers to those managed by popwin:
 (dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response"
                 "gud" "Completions" ))
-  (add-to-list (apply #'concat `("*" ,name "*"))
-               popwin:special-display-config))
+  (add-to-list 'popwin:special-display-config
+	       (apply #'concat `("*" ,name "*"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
-(require 'all-the-icons)
-(require 'neotree)
+(advice-add #'neotree-toggle :before (lambda () (require 'all-the-icons)))
 (global-set-key (kbd "C-c n") #'neotree-toggle)
-(setq neo-theme (if window-system 'icons 'arrow))
+(customize-set-variable 'neo-theme (if window-system 'icons 'arrow))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
