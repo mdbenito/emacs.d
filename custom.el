@@ -36,7 +36,29 @@
      (inferior-emacs-lisp-mode . company-complete)
      (sh-mode . company-complete))))
  '(tabbar-mode t nil (tabbar))
- '(tabbar-separator (quote (" "))))
+ '(tabbar-separator (quote (" ")))
+ '(vc-annotate-background "#181e26")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#98be65")
+     (40 . "#b4be6c")
+     (60 . "#d0be73")
+     (80 . "#ECBE7B")
+     (100 . "#e6ab6a")
+     (120 . "#e09859")
+     (140 . "#da8548")
+     (160 . "#d38079")
+     (180 . "#cc7cab")
+     (200 . "#c678dd")
+     (220 . "#d974b7")
+     (240 . "#ec7091")
+     (260 . "#ff6c6b")
+     (280 . "#d6696a")
+     (300 . "#ad6769")
+     (320 . "#836468")
+     (340 . "#5B6268")
+     (360 . "#5B6268"))))
+ '(vc-annotate-very-old-color nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

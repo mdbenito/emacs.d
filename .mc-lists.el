@@ -5,11 +5,13 @@
       '(
         c-electric-brace
         c-electric-semi&comma
+        forward-symbol
         smart-tab
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        backward-symbol
         c-electric-paren
         c-electric-slash
         smex
