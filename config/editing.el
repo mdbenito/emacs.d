@@ -124,6 +124,9 @@
 (global-key-binding (kbd "M-s-g") #'isearch-repeat-backward)
 
 (global-set-key (kbd "s-F") #'rgrep)
+(global-set-key (kbd "s-G") #'next-error)
+(global-set-key (kbd "M-s-G") #'previous-error)
+
 (global-set-key (kbd "s-r") #'query-replace)
 
 (global-unset-key (kbd "s-d"))  ; used to be isearch-repeat-forward (?)
