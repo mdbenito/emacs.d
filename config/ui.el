@@ -12,10 +12,10 @@
 
 (require 'workgroups2)
 (setq wg-session-file     "~/.emacs.d/workgroups"
-      wg-prefix-key                 (kbd "C-c w")
+      wg-prefix-key                 (kbd "s-w")
       wg-emacs-exit-save-behavior           'ask ; 'save 'ask or nil
       wg-workgroups-mode-exit-save-behavior 'ask ; 'save 'ask or nil
-      wg-mode-line-display-on                 nil)
+      wg-mode-line-display-on                nil)
 
 (define-key wg-prefixed-map (kbd "z") #'wg-undo-wconfig-change)
 (define-key wg-prefixed-map (kbd "Z") #'wg-redo-wconfig-change)
