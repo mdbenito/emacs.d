@@ -77,16 +77,16 @@
 (require 'popwin)
 (popwin-mode 1)
 ;; Add obnoxious buffers to those managed by popwin:
-(dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response" "gud"
-                "Completions" ))
-  (push (apply #'concat `("*" ,name "*")) popwin:special-display-config))
+(dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response"
+                "gud" "Completions" ))
+  (add-to-list 'popwin:special-display-config
+	       (apply #'concat `("*" ,name "*"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
-(require 'all-the-icons)
-(require 'neotree)
+(advice-add #'neotree-toggle :before (lambda () (require 'all-the-icons)))
 (global-set-key (kbd "C-c n") #'neotree-toggle)
-(setq neo-theme (if window-system 'icons 'arrow))
+(customize-set-variable 'neo-theme (if window-system 'icons 'arrow))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -104,22 +104,29 @@
     ;; Brighter modeline to tell windows apart
     (setq doom-enable-brighter-comments t)))
 
+(defun mbd--remove-hook-test (hook fun)
+  "Removes FUN from a HOOK and returns t if we did anything."
+  (let* ((funs-before (remove-hook hook nil))
+         (funs-after (remove-hook hook fun)))
+    (and (member fun funs-before) (not (member fun funs-after)))))
+
 (defun mbd--load-theme-after (theme &optional no-confirm no-enable)
   "Advice for after load-theme.
 Removes hooks which could conflict with other themes, etc."
-  (cond ((not (member theme '(doom-one doom-molokai doom-one-light)))         
-         (message "Removing doom-one hooks")
-         (remove-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
-         (remove-hook 'find-file-hook #'doom-buffer-mode)
+  (cond ((not (member theme '(doom-one doom-molokai doom-one-light)))
+         (when (and (mbd--remove-hook-test 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+                    (mbd--remove-hook-test 'find-file-hook #'doom-buffer-mode))
+           (message "Removed doom-one hooks"))
            ;; Remove ourselves from load-theme.
            ;; BUT THEN: we need to call advice-add upon loading the theme...
-           ;; (advice-remove 'load-theme #'doom-theme-cleanup)
+           ;; (advice-remove 'load-theme #'mbd--load-theme-after)
            ;; do more stuff...
            ;; HACK: this face was added by the hook and should be removed
            ;; (set-face-background 'doom-minibuffer-active "#ffffff")
            ;; UPDATE: Instead use disable-enabled-themes below
            )
         ((equal theme 'doom-one)
+         (message "Adding doom-one hooks")
          (add-hook 'find-file-hook #'doom-buffer-mode)
          (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
          (custom-theme-set-faces

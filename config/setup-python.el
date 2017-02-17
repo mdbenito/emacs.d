@@ -35,8 +35,9 @@
   (define-key realgud:shortkey-mode-map (kbd "<double-mouse-1>")
     (mdb-my-func-mouse realgud:cmd-print)))
 
-(with-eval-after-load 'anaconda-mode
+(with-eval-after-load "anaconda"
   (define-key anaconda-mode-map (kbd "M-<mouse-1>")
     (mdb-my-func-mouse (lambda (x) (anaconda-mode-show-doc))))
+  (define-key anaconda-mode-map (kbd "M-<f1>") #'anaconda-mode-show-doc)
   (define-key anaconda-mode-map (kbd "s-<mouse-1>")
     (mdb-my-func-mouse (lambda (x) (anaconda-mode-find-definitions)))))

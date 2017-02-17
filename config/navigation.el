@@ -61,6 +61,11 @@
 (global-set-key (kbd "s-K") #'kill-buffer-and-window)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "s-b") #'ibuffer)
+; Do I need this?
+;(global-set-key (kbd "s-k")
+                ;; kill-this-buffer fails sometimes under OSX
+                ;; see e.g. https://github.com/syl20bnr/spacemacs/issues/4929
+;                (lambda () (interactive) (kill-buffer (current-buffer))))
 
 
 (setq
@@ -69,9 +74,10 @@
  ;; Keep at most these many marks in the buffer's mark ring
  mark-ring-max 32)
 
-;; Sane navigation of the global mark ring.
-;; From http://stackoverflow.com/a/27661338/493464
-;; TODO:...
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FIXME: Sane navigation of the global mark ring.
+;; Adapted from http://stackoverflow.com/a/27661338
+;;
 
 (setq mdb--cycle-marks nil)
 
@@ -128,6 +134,71 @@ then use the global mark ring."
   (interactive)
   )
 
-
 (global-set-key (kbd "C-S-<left>") #'mdb-backward-mark-dwi)
 (global-set-key (kbd "C-S-<right>") #'mdb-forward-mark-dwi)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Undoing kill-buffer. Adapted from http://stackoverflow.com/a/2227692
+;;
+;; FIXME: the mark-ring for the closing buffer is already empty when
+;; the hook is called, so it makes no sense to reimplement what
+;; recentf does in recentf-track-closed-file
+
+;; (defvar mdb--killed-buffers (list))
+
+;; (defun mdb--track-killed-buffer ()
+;;   (message buffer-file-name)
+;;   (and buffer-file-name ;mark-ring
+;;        (add-to-list 'mdb--killed-buffers
+;;                     (cons buffer-file-name (car mark-ring)))))
+
+;; (defun mdb--last-killed-buffers ()
+;;   (interactive)
+  
+;;   (find-file (ido-completing-read "Last closed: "
+;;                                   (mapcar 'car mdb--killed-buffers))))
+
+;; (add-hook 'kill-buffer-hook 'mdb--track-killed-buffer)
+
+;; ;; Borrowed from https://www.emacswiki.org/emacs/RecentFiles
+;; (defun mdb--undo-kill-buffer (arg)
+;;   "Re-open the last buffer killed.  With ARG, re-open the nth buffer."
+;;   (interactive "p")
+;;   (let ((recently-killed-list (mapcar 'car mdb--killed-buffers))
+;; 	 (buffer-files-list
+;; 	  (delq nil (mapcar (lambda (buf)
+;; 			      (when (buffer-file-name buf)
+;; 				(expand-file-name (buffer-file-name buf))))
+;;                             (buffer-list))))
+;;          (n (if arg arg 0)))
+;;     ; Remove open buffers from recently-killed-list
+;;     (mapc
+;;      (lambda (buf-file)
+;;        (setq recently-killed-list
+;; 	     (delq buf-file recently-killed-list)))
+;;      buffer-files-list)
+;;     (let ((file (nth n recently-killed-list))
+;;           (marker (cdr (assoc file mdb--killed-buffers))))
+;;       (find-file file)
+;;       (if marker (goto-char (marker-position marker))))))
+
+;; Borrowed from https://www.emacswiki.org/emacs/RecentFiles
+(defun undo-kill-buffer (arg)
+  "Re-open the last buffer killed.  With ARG, re-open the nth buffer."
+  (interactive "p")
+  (let ((recently-killed-list (copy-sequence recentf-list))
+	 (buffer-files-list
+	  (delq nil (mapcar (lambda (buf)
+			      (when (buffer-file-name buf)
+				(expand-file-name (buffer-file-name buf))))
+                            (buffer-list)))))
+    (mapc
+     (lambda (buf-file)
+       (setq recently-killed-list
+	     (delq buf-file recently-killed-list)))
+     buffer-files-list)
+    (find-file
+     (if arg (nth arg recently-killed-list)
+       (car recently-killed-list)))))
+
+(global-set-key (kbd "s-W") #'undo-kill-buffer)
