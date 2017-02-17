@@ -57,7 +57,8 @@
 (global-set-key (kbd "M-s-<right>") #'switch-to-next-buffer)
 (global-set-key (kbd "M-s-<left>") #'switch-to-prev-buffer)
 (global-set-key (kbd "C-x C-k") #'kill-this-buffer)
-(global-set-key (kbd "s-w") #'kill-this-buffer)
+(global-set-key (kbd "s-k") #'kill-this-buffer)
+(global-set-key (kbd "s-K") #'kill-buffer-and-window)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "s-b") #'ibuffer)
 
