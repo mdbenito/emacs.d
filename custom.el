@@ -44,4 +44,5 @@
  '(realgud-bp-line-disabled-face ((t (:background "gray29"))))
  '(realgud-overlay-arrow1 ((t (:foreground "yellow" :weight bold))))
  '(realgud-overlay-arrow2 ((t (:foreground "yellow3"))))
- '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold)))))
+ '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold))))
+ '(which-func ((t (:foreground nil)))))
