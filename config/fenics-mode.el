@@ -3,12 +3,14 @@
 ;; Create your scripts with a line at the top like
 ;; # -*- fenics/dependencies: ("ffc" "ufl") -*-
 
+(require 'realgud)
 
 (defvar fenics/output-buffer "*fenics-build*")
 
 (make-variable-buffer-local
  (defvar fenics/dependencies '()
-   "A list of strings with the fenics dependencies (e.g. '(\"ffc\" \"ufl\")) for a buffer."))
+   "A list of strings with the fenics dependencies 
+(e.g. '(\"ffc\" \"ufl\")) for a buffer."))
 
 (defun fenics/tramp-current-host-safe ()
   "HACK: Check whether the current buffer is inside the fenics container via tramp."
@@ -20,19 +22,19 @@
 
 (defun fenics/build-dependencies (ignored)
   "HACK!"
+  ;; Note: TRAMP runs commands remotely, so we don't need to invoke docker
   (when (fenics/remote-file-p)
-    (with-temp-message (concat "Bulding " (mapconcat #'indentity nfenics/dependencies " ") "...")
+    (with-temp-message
+        (concat "Bulding " (mapconcat #'indentity nfenics/dependencies " ")
+                "...")
       (save-some-buffers #'fenics/remote-file-p)
-      (let* (;;(docker-cmd "docker exec -u fenics fenics-dev bash -c ")
-             (bash-cmd (concat ". /home/fenics/fenics.env.conf && /home/fenics/bin/fenics-build "
+      (let* ((bash-cmd (concat ". /home/fenics/fenics.env.conf && /home/fenics/bin/fenics-build "
                                (mapconcat #'indentity fenics/dependencies " "))))
-        ;; Note: TRAMP runs commands remotely, so
-        ;; (shell-command (concat docker-cmd "'" bash-cmd "'") "*fenics-build*" "*fenics-build*")
         (shell-command bash-cmd fenics/output-buffer fenics/output-buffer)))))
 
 (defvar fenics-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "s-d") #'pdb)
+    (define-key map (kbd "s-d") #'realgud:pdb)
     map)
   "Keymap for fenics minor mode.")
 
@@ -44,7 +46,7 @@ Key bindings:
   :lighter " fen"
   :keymap fenics-minor-mode-map
   (if fenics-minor-mode
-      (advice-add #'pdb :before #'fenics/build-dependencies)
-    (advice-remove #'pdb #'fenics/build-dependencies)))
+      (advice-add #'realgud:pdb :before #'fenics/build-dependencies)
+    (advice-remove #'realgud:pdb #'fenics/build-dependencies)))
 
 (provide 'fenics-minor-mode)

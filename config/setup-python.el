@@ -6,8 +6,8 @@
   '(add-to-list 'company-backends 'company-anaconda))
 
 (with-eval-after-load "python"
-  (load-library "realgud")
   (define-key python-mode-map (kbd "s-d") #'realgud:pdb))
+;; (load-library "realgud")
 
 (with-eval-after-load "realgud"  
   (puthash "print" "pp %s" realgud:pdb-command-hash)
