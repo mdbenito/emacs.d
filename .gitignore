@@ -1,6 +1,8 @@
 *~$
 places
 .recentf
+.smex-items
+.mc-lists.el
 ido.last
 cider-history
 projectile-bookmarks.eld
