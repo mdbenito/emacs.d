@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- wg-save-session
+ wg-undo-wconfig-change
+ line-number-mode
+ rotate-layout
  load-theme
  package-list-packages
- realgud:pdb
- anaconda-mode-find-references
- wg-undo-wconfig-change
  magit-status
+ rgrep
 )
 
 ;; ----- smex-data -----
@@ -63,7 +63,7 @@
  (ocodo-svg-modelines-init . 1)
  (smt/set-theme . 13)
  (emacs-version . 1)
- (line-number-mode . 6)
+ (line-number-mode . 9)
  (smart-tab-mode . 4)
  (workgroups-mode . 2)
  (paredit-forward-slurp-sexp . 2)
@@ -168,7 +168,7 @@
  (winner-undo . 16)
  (wg-save-wconfig . 16)
  (wg-restore-saved-wconfig . 6)
- (wg-undo-wconfig-change . 10)
+ (wg-undo-wconfig-change . 11)
  (powerline-nano-theme . 2)
  (powerline-reset . 2)
  (powerline-revert . 2)
@@ -179,7 +179,7 @@
  (goto-char . 2)
  (eval-last-sexp . 8)
  (pdb . 13)
- (rotate-layout . 10)
+ (rotate-layout . 16)
  (bash-completion-reset . 4)
  (anaconda-mode . 14)
  (pythonic-activate . 20)

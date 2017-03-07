@@ -127,6 +127,8 @@ Removes hooks which could conflict with other themes, etc."
            )
         ((equal theme 'doom-one)
          (message "Adding doom-one hooks")
+         ;; Set doom-buffer-mode for all open buffers
+         (mapc (lambda (b) (with-current-buffer b (doom-buffer-mode))) (buffer-list))
          (add-hook 'find-file-hook #'doom-buffer-mode)
          (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
          (custom-theme-set-faces
