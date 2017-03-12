@@ -170,3 +170,6 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
   (define-key magit-mode-map (kbd "S-C-M-<right>")
     (lambda () (interactive)
       (magit-section-show-children magit-root-section))))
+
+;; Disable emacs' VC for git repos
+(setq vc-handled-backends (delq 'Git vc-handled-backends))
