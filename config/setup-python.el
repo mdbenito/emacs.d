@@ -33,11 +33,11 @@
   (define-key realgud:shortkey-mode-map  "p" #'realgud:cmd-print)
   (define-key realgud:shortkey-mode-map "P" #'realgud:pdb-cmd-print-locals)
   (define-key realgud:shortkey-mode-map (kbd "<double-mouse-1>")
-    (mdb-my-func-mouse realgud:cmd-print)))
+    (mbd-my-func-mouse realgud:cmd-print)))
 
 (with-eval-after-load "anaconda"
   (define-key anaconda-mode-map (kbd "M-<mouse-1>")
-    (mdb-my-func-mouse (lambda (x) (anaconda-mode-show-doc))))
+    (mbd-my-func-mouse (lambda (x) (anaconda-mode-show-doc))))
   (define-key anaconda-mode-map (kbd "M-<f1>") #'anaconda-mode-show-doc)
   (define-key anaconda-mode-map (kbd "s-<mouse-1>")
-    (mdb-my-func-mouse (lambda (x) (anaconda-mode-find-definitions)))))
+    (mbd-my-func-mouse (lambda (x) (anaconda-mode-find-definitions)))))

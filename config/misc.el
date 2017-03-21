@@ -12,7 +12,7 @@
 (setq inhibit-startup-message t)
 
 ;; I use this elsewhere
-(defmacro mdb-my-func-mouse (func)
+(defmacro mbd-my-func-mouse (func)
   "Calls FUNC with the symbol under a mouse click."
   `(lambda (event)
     (interactive "e")
