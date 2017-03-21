@@ -101,13 +101,8 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Activate WhichFunction and set color
+;; Activate WhichFunction
 (add-hook 'prog-mode-hook #'which-function-mode)
-
-(eval-after-load #'which-function-mode
-  (custom-set-faces
-  `(which-func
-    ((t (:foreground ,(face-foreground 'font-lock-function-name-face)))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

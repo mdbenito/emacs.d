@@ -71,4 +71,4 @@
  '(realgud-overlay-arrow1 ((t (:foreground "yellow" :weight bold))))
  '(realgud-overlay-arrow2 ((t (:foreground "yellow3"))))
  '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold))))
- '(which-func ((t (:foreground nil)))))
+ `(which-func ((t (:foreground ,(face-foreground 'font-lock-function-name-face))))))
