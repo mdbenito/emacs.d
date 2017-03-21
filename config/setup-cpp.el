@@ -21,3 +21,9 @@
 (add-to-list 'company-backends 'company-rtags)
 
 (cmake-ide-setup)
+
+
+(define-key c++-mode-map (kbd "s-<mouse-1>")
+  (mbd-my-func-mouse rtags-find-symbol-at-point))
+(define-key c++-mode-map (kbd "M-.") #'rtags-find-symbol-at-point)
+
