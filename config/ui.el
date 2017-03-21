@@ -78,9 +78,11 @@
 (popwin-mode 1)
 ;; Add obnoxious buffers to those managed by popwin:
 (dolist (name '("xref" "Anaconda" "anaconda-mode" "anaconda-response"
-                "gud" "Completions" ))
+                "gud" "Completions"))
   (add-to-list 'popwin:special-display-config
 	       (apply #'concat `("*" ,name "*"))))
+(add-to-list 'popwin:special-display-config
+             '("*RTags*" :stick t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
