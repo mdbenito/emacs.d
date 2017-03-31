@@ -43,4 +43,4 @@
 (load "setup-cpp.el")
 (load "setup-python.el")
 (load "setup-markdown.el")
-
+(load "setup-web.el")

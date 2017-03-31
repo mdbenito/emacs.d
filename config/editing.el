@@ -227,7 +227,10 @@
     ;;(define-key hs-minor-mode-map (kbd "<double-mouse-1>") #'hs-toggle-hiding)
     (define-key hs-minor-mode-map (kbd "<S-return>") #'hs-toggle-hiding)))
 
-(add-hook 'prog-mode-hook #'hs-minor-mode)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (unless (eq major-mode 'web-mode)
+              (hs-minor-mode))))
 
 ;;;; Global keymaps
 ;; (defmacro defkbalias (new old)
