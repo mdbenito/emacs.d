@@ -55,7 +55,7 @@ mouse-2: pop to buffer\nmouse-3: delete other windows"
          (make-item (lambda (x) (popup-make-item (symbol-name (cdr x)) :value x)))
          (choice (popup-menu* (mapcar make-item groups) :point (max 1 (- (window-start) 1)))))
     (tabbar-click-on-tab choice)
-    (tabbar-buffer-show-groups f)))
+    (tabbar-buffer-show-groups nil)))
 
 (define-key tabbar-mode-map (kbd "C-<escape>") #'mbd--tabbar-press-home)
 (define-key tabbar-mode-map (kbd "C-<tab>") #'tabbar-forward-tab)
