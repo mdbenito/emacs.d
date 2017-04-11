@@ -7,7 +7,8 @@
 ;;     - I need to run cmake-ide-run-cmake once when opening a new project
 ;;
 ;; * rtags uses the json in order to provide jump-to-definition
-;;     - rtags-find-symbol-at-point fails miserably.
+;;     - REMEMBER TO UPDATE rdm/rc after updating the melpa package!!!
+;;       In particular check whether homebrew's version isn't behind.
 ;;
 ;; * flycheck uses rtags to provide syntax checks. Works, sort of.
 ;;
