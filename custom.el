@@ -59,7 +59,8 @@
      (320 . "#836468")
      (340 . "#5B6268")
      (360 . "#5B6268"))))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(which-function-mode t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
