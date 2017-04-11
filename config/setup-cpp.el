@@ -1,5 +1,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic setup
+;; 
+;; * cmake-ide should be able to invoke cmake so that it creates a json file
+;;   with build commands for rtags, irony-server
+;;     - build products go to "~/Devel/builds"
+;;     - I need to run cmake-ide-run-cmake once when opening a new project
+;;
+;; * rtags uses the json in order to provide jump-to-definition
+;;     - rtags-find-symbol-at-point fails miserably, always.
+;;
+;; * flycheck uses rtags to provide syntax checks. Works, sort of.
+;;
+;; * irony-server uses it to provide completions. BUT:
+;;   - I need to restart irony-server for each buffer!?!?!
+;;   - I need to manually reset irony-cdb-json-select
+;;
 
 (require 'flycheck-rtags)
 (require 'irony)
@@ -32,11 +47,9 @@
      (setq company-backends (delete 'company-clang company-backends))
      (setq company-backends (delete 'company-semantic company-backends))))
 
-(eval-after-load 'c-mode
-  '(progn
-     (define-key c-mode-base-map (kbd "s-<mouse-1>")
-       (mbd-my-func-mouse rtags-find-symbol-at-point))
-     (define-key c-mode-base-map (kbd "M-.") #'rtags-find-symbol-at-point)))
+(define-key c-mode-base-map (kbd "s-<mouse-1>")
+  (mbd-my-func-mouse rtags-find-symbol-at-point))
+(define-key c-mode-base-map (kbd "M-.") #'rtags-find-symbol-at-point)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-ide should make my life easier... But it doesn't
