@@ -7,7 +7,7 @@
 ;;     - I need to run cmake-ide-run-cmake once when opening a new project
 ;;
 ;; * rtags uses the json in order to provide jump-to-definition
-;;     - rtags-find-symbol-at-point fails miserably, always.
+;;     - rtags-find-symbol-at-point fails miserably.
 ;;
 ;; * flycheck uses rtags to provide syntax checks. Works, sort of.
 ;;
@@ -36,6 +36,7 @@
 
 (setq rtags-tramp-enabled t) ;; Enable rtags to run over tramp
 (setq rtags-autostart-diagnostics t)
+(rtags-diagnostics)
 ;(setq rtags-completions-enabled t)
 
 (eval-after-load 'company
@@ -50,6 +51,7 @@
 (define-key c-mode-base-map (kbd "s-<mouse-1>")
   (mbd-my-func-mouse rtags-find-symbol-at-point))
 (define-key c-mode-base-map (kbd "M-.") #'rtags-find-symbol-at-point)
+(define-key c-mode-base-map (kbd "M-?") #'rtags-find-references-at-point)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-ide should make my life easier... But it doesn't
