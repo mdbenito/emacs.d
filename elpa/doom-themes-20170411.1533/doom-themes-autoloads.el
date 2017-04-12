@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "doom-themes" "doom-themes.el" (22753 62126
+;;;### (autoloads nil "doom-themes" "doom-themes.el" (22766 11076
 ;;;;;;  0 0))
 ;;; Generated autoloads from doom-themes.el
 
@@ -30,7 +30,7 @@ buffer represents a real file.
 
 ;;;### (autoloads nil nil ("doom-molokai-theme.el" "doom-neotree.el"
 ;;;;;;  "doom-nlinum.el" "doom-one-light-theme.el" "doom-one-theme.el"
-;;;;;;  "doom-themes-pkg.el") (22753 62128 0 0))
+;;;;;;  "doom-themes-pkg.el") (22766 11076 0 0))
 
 ;;;***
 

@@ -5,7 +5,7 @@
 ;; Author: Jan Erik Hanssen <jhanssen@gmail.com>
 ;;         Anders Bakken <agbakken@gmail.com>
 ;; URL: http://rtags.net
-;; Package-Version: 20170408.1642
+;; Package-Version: 20170411.1832
 ;; Version: 2.9
 
 ;; This file is not part of GNU Emacs.
@@ -3103,7 +3103,7 @@ This includes both declarations and definitions."
     (when (and start
                end
                replacedata
-               (eq severity 'fixit)
+               (eq severity 'fixit))
       (save-excursion
         (save-restriction
           (widen)
@@ -3126,7 +3126,7 @@ This includes both declarations and definitions."
                           (end (overlay-get overlay 'rtags-error-end)))
                       (overlay-put overlay 'rtags-error-start (+ start change))
                       (overlay-put overlay 'rtags-error-end (+ end change))))
-                  (setq overlays (cdr overlays))))))))))))
+                  (setq overlays (cdr overlays)))))))))))
 
 ;;;###autoload
 (defun rtags-fix-fixit-at-point ()
@@ -3660,11 +3660,11 @@ other window instead of the current one."
                 (goto-char (point-min))
                 (and (looking-at "Functions called from: \\(.*?\\):[0-9]+:[0-9]+:")
                      (match-string 1)))))
-  (when file
-    (save-excursion
-      (goto-char (point-at-bol))
-      (when (looking-at ".*called from - .*?:\\([0-9]+\\):\\([0-9]+\\):")
-        (rtags-goto-location (concat file ":" (match-string 1) ":" (match-string 2)) (not not-other-window)))))))
+    (when file
+      (save-excursion
+        (goto-char (point-at-bol))
+        (when (looking-at ".*called from - .*?:\\([0-9]+\\):\\([0-9]+\\):")
+          (rtags-goto-location (concat file ":" (match-string 1) ":" (match-string 2)) (not not-other-window)))))))
 
 
 ;;;###autoload
@@ -4455,11 +4455,11 @@ Return nil if it can't get any info about the item."
             (setq symbol-text (format "enum: %s = %d(0x%x)" (cdr (assoc 'symbolName symbol))
                                       (cdr (assoc 'enumValue symbol)) (cdr (assoc 'enumValue symbol))))
           (setq symbol-text (cdr (assoc 'contents (rtags-get-file-contents :info symbol :maxlines (or max-num-lines 5)))))
-        (when arg-text
-          (setq symbol-text (concat symbol-text "\n" arg-text)))
-        (when brief
-          (setq symbol-text (concat symbol-text "\n\n" brief)))
-        symbol-text)))))
+          (when arg-text
+            (setq symbol-text (concat symbol-text "\n" arg-text)))
+          (when brief
+            (setq symbol-text (concat symbol-text "\n\n" brief)))
+          symbol-text)))))
 
 ;;;###autoload
 (defun rtags-display-summary (&optional hide-empty pos)
@@ -4921,14 +4921,13 @@ the user enter missing field manually."
     (cond ((eq status 'exit)
            (message "RTags is now installed in %s"
                     (with-current-buffer (process-buffer process)
-                      default-directory))
-           (kill-buffer (process-buffer process)))
+                      default-directory)))
           ((memq status '(signal closed failed))
            (message "RTags failed to install")
            (switch-to-buffer (process-buffer process)))
           (t nil))))
 
-(defun rtags-install (&optional dir)
+(defun rtags-install (&optional dir cmakeargs)
   (interactive "P")
   (when (cond ((not (processp rtags-install-process)))
               ((memq (process-status rtags-install-process) '(exit signal closed failed)))
@@ -4944,10 +4943,11 @@ the user enter missing field manually."
       (make-directory dir))
     (let ((default-directory dir))
       (with-temp-buffer
-        (insert "#!/bin/bash\n"
+        (insert "#!/bin/bash -x\n"
                 (format "FILE=\"rtags-%s.tar.bz2\"\n" rtags-package-version)
                 "URL=\"https://andersbakken.github.io/rtags-releases/$FILE\"\n"
                 "ARGS=\"--progress -L -o $FILE\"\n"
+                "CMAKEARGS=" (combine-and-quote-strings (if (listp cmakeargs) cmakeargs (list cmakeargs))) "\n"
                 "[ -e \"$FILE\" ] && ARGS=\"$ARGS -C -\"\n"
                 "ARGS=\"$ARGS $URL\"\n"
                 "echo \"Downloading rtags from $URL\"\n"
@@ -4959,12 +4959,17 @@ the user enter missing field manually."
                 "if ! tar xfj \"$FILE\"; then\n"
                 "    echo \"Failed to untar $FILE\" >&2\n"
                 "    rm \"$FILE\"\n"
-                "    exit 1\n"
+                "    exit 2\n"
                 "fi\n"
                 "\n"
                 "cd \"`echo $FILE | sed -e 's,\.tar.bz2,,'`\"\n"
-                "cmake .\n"
-                "make\n")
+                "if ! cmake . ${CMAKEARGS}; then\n"
+                "    echo Failed to cmake\n"
+                "    rm -rf CMakeCache.txt\n"
+                "    exit 3\n"
+                "fi\n"
+                "make\n"
+                "exit $?\n")
         (write-region (point-min) (point-max) "install-rtags.sh"))
       (switch-to-buffer (rtags-get-buffer "*RTags install*"))
       (setq buffer-read-only t)

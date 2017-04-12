@@ -108,7 +108,6 @@
      `(doom-flycheck-error    ((,c (:underline nil :foreground ,black :background ,red))))
      `(doom-flycheck-warning  ((,c (:underline nil :foreground ,black :background ,yellow))))
      `(doom-flycheck-info     ((,c (:underline nil :foreground ,black :background ,green))))
-     `(doom-folded-face       ((,c (:foreground ,comments :background ,black))))
      ;; mode-line
      `(doom-modeline-buffer-path       ((,c (:foreground ,(if bold white cyan) :bold ,bold))))
      `(doom-modeline-buffer-project    ((,c (:foreground ,fg))))
@@ -358,6 +357,8 @@
      `(tabbar-highlight            ((,c (:foreground ,fg :background ,bg-d :inverse-video t))))
      `(tabbar-button               ((,c (:foreground ,modeline-fg :background ,modeline-bg-inactive))))
      `(tabbar-button-highlight     ((,c (:inherit tabbar-button :inverse-video t))))
+     ;; smartparens
+     `(sp-pair-overlay-face        ((,c (:background ,region))))
      ;; swiper
      `(swiper-line-face            ((,c (:background ,blue    :foreground ,black))))
      `(swiper-match-face-1         ((,c (:background ,black   :foreground ,grey))))
@@ -365,7 +366,7 @@
      `(swiper-match-face-3         ((,c (:background ,magenta :foreground ,black :bold ,bold))))
      `(swiper-match-face-4         ((,c (:background ,green   :foreground ,black :bold ,bold))))
      ;; stripe-buffer
-     `(stripe-highlight            ((,c (:background ,bg))))
+     `(stripe-highlight            ((,c (:background ,bg-d))))
      ;; Volatile highlights
      `(vhl/default-face            ((,c (:background ,grey-d))))
      ;; Rainbow delimiters
@@ -440,9 +441,9 @@
      ;;`(markdown-link-title-face        ((,c (:inherit link))))
      ;;`(markdown-url-face               ((,c (:inherit link))))
      ;; org-mode
-     `(org-tag                   ((,c (:foreground ,yellow :bold nil))))
+     `(org-tag                   ((,c (:foreground ,green :bold nil))))
      `(org-priority              ((,c (:foreground ,red))))
-     ;;`(org-ellipsis            ((,c (:inherit hs-face))))
+     `(org-ellipsis              ((,c (:background ,current-line :foreground ,comments :underline nil))))
      `(org-hide                  ((,c (:foreground ,bg))))
      `(org-table                 ((,c (:foreground ,cyan))))
      `(org-quote                 ((,c (:slant italic :foreground ,grey :background ,current-line))))
@@ -452,6 +453,7 @@
      `(org-block-begin-line      ((,c (:background ,current-line :foreground ,comments))))
      `(org-block-end-line        ((,c (:inherit org-block-begin-line))))
      `(org-block-background      ((,c (:background ,current-line))))
+     `(org-block                 ((,c (:background ,current-line))))
      `(org-archived              ((,c (:foreground ,grey))))
      `(org-document-title        ((,c (:foreground ,cyan :height 1.2))))
      `(org-level-1               ((,c (:background ,current-line :foreground ,blue :bold ,bold :height 1.2))))
