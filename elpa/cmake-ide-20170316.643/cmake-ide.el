@@ -406,7 +406,7 @@ the object file's name just above."
     (if (not (file-exists-p (expand-file-name "build.ninja" default-directory)))
         nil
       (with-temp-buffer
-        (call-process cmake-ide-ninja-command nil t nil "-C" default-directory "-t" "deps")
+        (process-file cmake-ide-ninja-command nil t nil "-C" default-directory "-t" "deps")
         (goto-char (point-min))
         (setq beg (search-forward file-name nil t))
         (if (null beg)
@@ -560,7 +560,7 @@ the object file's name just above."
   (when project-dir
     (let ((default-directory cmake-dir))
       (cmake-ide--message "Running cmake for src path %s in build path %s" project-dir cmake-dir)
-      (start-process "cmake" "*cmake*" cmake-ide-cmake-command "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" project-dir))))
+      (start-file-process "cmake" "*cmake*" cmake-ide-cmake-command "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" project-dir))))
 
 
 (defun cmake-ide--get-build-dir ()
@@ -884,11 +884,10 @@ the object file's name just above."
              (command (concat (elt commands index) " " file-name " " "-o" " " tmp-file-name))
              (_ (cmake-ide--message "Trying to compile '%s' with '%s'" file-name command))
              (args (split-string command " +")))
-        (when (eq 0 (apply #'call-process (car args) nil nil nil (cdr args)))
+        (when (eq 0 (apply #'process-file (car args) nil nil nil (cdr args)))
           (setq ret command)))
       (cl-incf index))
     ret))
-
 
 (defun cmake-ide--idb-unique-compiler-commands (idb)
   "Calculate the list of unique compiler commands in IDB ignoring the source file name."
@@ -943,9 +942,9 @@ the object file's name just above."
     (unless (cmake-ide--process-running-p "rdm")
       (let ((buf (get-buffer-create cmake-ide-rdm-buffer-name)))
         (cmake-ide--message "Starting rdm server")
-        (with-current-buffer buf (start-process "rdm" (current-buffer)
-                                                cmake-ide-rdm-executable
-                                                "-c" cmake-ide-rdm-rc-path))))))
+        (with-current-buffer buf (start-file-process "rdm" (current-buffer)
+                                                     cmake-ide-rdm-executable
+                                                     "-c" cmake-ide-rdm-rc-path))))))
 
 (defun cmake-ide--process-running-p (name)
   "If a process called NAME is running or not."
