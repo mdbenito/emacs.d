@@ -24,13 +24,29 @@
 (require 'rtags)
 (require 'cc-mode)
 
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode)
-                (irony-mode)
-                (flycheck-mode)
-                (flycheck-select-checker 'rtags))))
+(defun remove-from-list (l what)
+  (setq l (delete what l)))
 
+(defun mbd--c-mode-common-config ()
+  (when (derived-mode-p 'c-mode 'c++-mode)
+    ;; irony doesn't support tramp (yet? 04.2017) Only use it on local files
+    ;; it provides better completions than rtags
+    (if (tramp-tramp-file-p (buffer-file-name (current-buffer)))
+        (progn
+          (remove-from-list company-backends 'company-irony)
+          (remove-from-list company-backends 'company-c-headers)
+          (add-to-list 'company-backends 'company-rtags)
+          (setq rtags-completions-enabled t))
+      (progn
+        (add-to-list 'company-backends 'company-irony)
+        (add-to-list 'company-backends 'company-c-headers)
+        (remove-from-list company-backends 'company-rtags)
+        (setq rtags-completions-enabled nil)
+        (irony-mode)))
+    (flycheck-mode)
+    (flycheck-select-checker 'rtags)))
+
+(add-hook 'c-mode-common-hook #'mbd--c-mode-common-config)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; rtags kicks ass
@@ -38,13 +54,9 @@
 (setq rtags-tramp-enabled t) ;; Enable rtags to run over tramp
 (setq rtags-autostart-diagnostics t)
 (rtags-diagnostics)
-;(setq rtags-completions-enabled t)
 
 (eval-after-load 'company
   '(progn
-     (add-to-list 'company-backends 'company-irony)
-     (add-to-list 'company-backends 'company-c-headers)
-     ;(add-to-list 'company-backends 'company-rtags)  ; doesn't work that well
      ; ensure we don't use some company-whatever by mistake
      (setq company-backends (delete 'company-clang company-backends))
      (setq company-backends (delete 'company-semantic company-backends))))
