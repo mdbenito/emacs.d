@@ -173,12 +173,14 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
     (insert-file-contents file-path)
     (mbd-string-chomp (buffer-string))))
 
-(eval-after-load 'tramp
-  (setq tramp-default-method "ssh"))
 (eval-after-load 'paradox
   (setq paradox-github-token
         (mbd-string-from-file "~/.emacs.d/private/paradox-token")))
 
+(eval-after-load 'tramp
+  (setq tramp-default-method "docker"))
+
+(setq enable-remote-dir-locals t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit config
