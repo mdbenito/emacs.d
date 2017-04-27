@@ -55,6 +55,8 @@
 
 (advice-add 'grep :after #'mbd--hide-grep-header)
 (advice-add 'rgrep :after #'mbd--hide-grep-header)
+;; (advice-remove 'rgrep #'mbd--hide-grep-header)
+;; (advice-remove 'grep #'mbd--hide-grep-header)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Debugger(s)
