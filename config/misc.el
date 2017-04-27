@@ -34,11 +34,14 @@
       (setq buffer-read-only t))))
 
 ; Original idea at http://stackoverflow.com/a/16133543
-(defun mbd--hide-grep-header ()
+(defun mbd--hide-grep-header (&rest ignored)
+  "Hides (by narrowing) the first few lines of a grep buffer leaving only 
+the results. Additionally, a button is created to toggle the lines."
   (with-grep-buffer-writable
    (goto-line 5)
    (narrow-to-region (point) (point-max))
    (insert-text-button "(...)"
+                       'help-echo "Toggle display of grep invocation"
                        'action #'mbd--click-show-grep-button)
    (insert "\n")))
 
