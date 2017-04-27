@@ -26,35 +26,39 @@
 ;; Hide the first lines of grep and rgrep
 ;; redisplay them with C-x n w
 
-(defmacro with-grep-buffer-writable (&rest body)
+(defmacro mbd--with-grep-buffer-writable (&rest body)
   `(save-excursion
-    (with-current-buffer grep-last-buffer
-      (setq buffer-read-only nil)
-      ,@body
-      (setq buffer-read-only t))))
+     (with-current-buffer grep-last-buffer
+       (setq buffer-read-only nil)
+       ,@body
+       (setq buffer-read-only t))))
 
 ; Original idea at http://stackoverflow.com/a/16133543
 (defun mbd--hide-grep-header (&rest ignored)
   "Hides (by narrowing) the first few lines of a grep buffer leaving only 
 the results. Additionally, a button is created to toggle the lines."
-  (with-grep-buffer-writable
-   (goto-line 5)
+  (mbd--with-grep-buffer-writable
+   ;;HACK: If we (goto-line 5), the button is inserted *after* the results.
+   (goto-line 4)
+   (end-of-line)
+   (insert "\n")
    (narrow-to-region (point) (point-max))
    (insert-text-button "(...)"
                        'help-echo "Toggle display of grep invocation"
-                       'action #'mbd--click-show-grep-button)
-   (insert "\n")))
+                       'action #'mbd--click-show-grep-button)))
 
 (defun mbd--click-hide-grep-button (button)
-  (with-grep-buffer-writable
+  (mbd--with-grep-buffer-writable
    (button-put button 'action #'mbd--click-show-grep-button)
    (narrow-to-region (button-start button) (point-max))))
 
 (defun mbd--click-show-grep-button (button)
-  (with-grep-buffer-writable
+  (mbd--with-grep-buffer-writable
    (button-put button 'action #'mbd--click-hide-grep-button)
-   (widen)
-   (goto-line 1)))
+   (widen))
+  ; HACK: goto-line won't have any effect because of save-excursion
+  (with-current-buffer grep-last-buffer
+    (goto-line 1)))
 
 (advice-add 'grep :after #'mbd--hide-grep-header)
 (advice-add 'rgrep :after #'mbd--hide-grep-header)
