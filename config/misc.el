@@ -24,7 +24,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hide the first lines of grep and rgrep
-;; redisplay them with C-x n w
+;; Toggle between hidden and shown with a button
 
 (defmacro mbd--with-grep-buffer-writable (&rest body)
   `(save-excursion
@@ -62,8 +62,6 @@ the results. Additionally, a button is created to toggle the lines."
 
 (advice-add 'grep :after #'mbd--hide-grep-header)
 (advice-add 'rgrep :after #'mbd--hide-grep-header)
-;; (advice-remove 'rgrep #'mbd--hide-grep-header)
-;; (advice-remove 'grep #'mbd--hide-grep-header)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Debugger(s)
