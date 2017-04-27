@@ -21,6 +21,44 @@
       (let ((sy (symbol-at-point)))
         (,func (symbol-name sy))))))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hide the first lines of grep and rgrep
+;; redisplay them with C-x n w
+
+; Original idea at http://stackoverflow.com/a/16133543
+(defun mbd--hide-grep-header ()
+  (save-excursion
+    (with-current-buffer grep-last-buffer
+      (goto-line 5)
+      (narrow-to-region (point) (point-max))
+      (setq buffer-read-only nil)
+      (insert-text-button "(...)"
+;                          'help-echo "Show grep invocation"
+                          'action #'mbd--click-show-grep-button)
+      (insert "\n")
+      (setq buffer-read-only t))))
+
+(defun mbd--click-hide-grep-button (button)
+  (save-excursion
+    (with-current-buffer grep-last-buffer
+      (setq buffer-read-only nil)      
+      (button-put button 'action #'mbd--click-show-grep-button)
+      (narrow-to-region (button-start button) (point-max))
+      (setq buffer-read-only t))))
+
+(defun mbd--click-show-grep-button (button)
+  (save-excursion
+    (with-current-buffer grep-last-buffer
+      (setq buffer-read-only nil)
+      (button-put button 'action #'mbd--click-hide-grep-button)
+      (widen)
+      (goto-line 1)
+      (setq buffer-read-only t))))
+
+(advice-add 'grep :after #'mbd--hide-grep-header)
+(advice-add 'rgrep :after #'mbd--hide-grep-header)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Debugger(s)
 ;; Not necessary if using realgud
