@@ -26,7 +26,7 @@
 ;; Hide the first lines of grep and rgrep
 ;; redisplay them with C-x n w
 
-(defmacro with-grep-buffer-writable (&body body)
+(defmacro with-grep-buffer-writable (&rest body)
   `(save-excursion
     (with-current-buffer grep-last-buffer
       (setq buffer-read-only nil)
