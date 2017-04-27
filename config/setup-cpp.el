@@ -68,7 +68,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-ide should make my life easier... But it doesn't
-
-(cmake-ide-setup)
-(setq cmake-ide-build-pool-dir "~/Devel/builds")
-(setq cmake-ide-build-pool-use-persistent-naming t)
+;; (cmake-ide-setup)
+;; (setq cmake-ide-build-pool-dir "~/Devel/builds")
+;; (setq cmake-ide-build-pool-use-persistent-naming t)
