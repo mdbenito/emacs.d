@@ -191,7 +191,7 @@
       (global-set-key (kbd "M-l") "@")
       (global-set-key (kbd "M-n") "~")
 
-      (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
+      ;(global-set-key (kbd "s-y") #'yank)   ; easier on the hand
 
       ; I don't have a right control key. Use right command.
       (setq mac-right-command-modifier 'control)))
