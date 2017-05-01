@@ -198,20 +198,17 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Operations in lines
+;; Moving (things) around
 
-;; Moving lines around
 (require 'move-lines)
 (move-lines-binding)  ;; c-<up> and c-<down> move lines/regions
 
-;; Moving inside lines
 (global-set-key (kbd "s-<left>") #'move-beginning-of-line)
 (global-set-key (kbd "s-<right>") #'move-end-of-line)
 (global-set-key (kbd "<home>") #'move-beginning-of-line)
 (global-set-key (kbd "<end>") #'move-end-of-line)
-(global-set-key (kbd "s-<home>") #'beginning-of-buffer)
-(global-set-key (kbd "s-<end>") #'end-of-buffer)
-
+(global-set-key (kbd "s-<up>") #'beginning-of-buffer)
+(global-set-key (kbd "s-<down>") #'end-of-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HideShow rebindings (shows/hides code blocks)
