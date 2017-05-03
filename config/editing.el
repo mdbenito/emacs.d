@@ -45,6 +45,7 @@
 ;; Multiple cursors magic
 ;(require 'multiple-cursors)  ; in custom.el
 (global-set-key (kbd "<f6>") #'mc/mark-all-dwim)
+(global-set-key (kbd "<f7>") #'mc/edit-lines)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting lines and regions
