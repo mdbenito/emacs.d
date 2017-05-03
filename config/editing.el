@@ -49,7 +49,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting lines and regions
 
-(defun comment-really-dwim ()
+(defun mdb--comment-really-dwim ()
   "Comment or uncomment current line / region"
   (interactive)
   (if (region-active-p)
@@ -60,7 +60,7 @@
         ;; (and set-mark is not it...)
         )
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
-(global-set-key (kbd "C-;") #'comment-really-dwim)
+(global-set-key (kbd "C-;") #'mdb--comment-really-dwim)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yay rainbows!
