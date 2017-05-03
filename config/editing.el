@@ -47,6 +47,13 @@
 (global-set-key (kbd "<f6>") #'mc/mark-all-dwim)
 (global-set-key (kbd "<f7>") #'mc/edit-lines)
 
+;; TO DO: Finish this
+(defun mdb--isearch ()
+  (let ((s (symbol-at-point)))
+    (isearch-yank-string (or (and s (symbol-name s)) ""))))
+
+;; (global-set-key (kbd "s-f") #'mdb--isearch)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting lines and regions
 
