@@ -21,6 +21,7 @@
       (let ((sy (symbol-at-point)))
         (,func (symbol-name sy))))))
 
+(define-key global-map (kbd "s-h") #'easy-hugo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hide the first lines of grep and rgrep
