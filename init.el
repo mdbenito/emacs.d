@@ -35,7 +35,6 @@
 ;; These customizations make editing a bit nicer.
 (load "editing.el")
 
-
 ;; Language-specific
 (load "setup-elisp.el")
 (load "setup-clojure.el")
@@ -44,3 +43,4 @@
 (load "setup-python.el")
 (load "setup-markdown.el")
 (load "setup-web.el")
+(load "tm-mode.el")
