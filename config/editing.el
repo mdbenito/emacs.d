@@ -127,24 +127,25 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Standard shortcuts
+;; UPD: I've disabled most of these since they make me twist my left hand
 
 ;; Interactive search key bindings. By default, C-s runs
 ;; isearch-forward, so this swaps the bindings.
-(global-set-key (kbd "C-s") #'isearch-forward-regexp)
-(global-set-key (kbd "C-r") #'isearch-backward-regexp)
+;; (global-set-key (kbd "C-s") #'isearch-forward-regexp)
+;; (global-set-key (kbd "C-r") #'isearch-backward-regexp)
 
-(global-set-key (kbd "s-f") #'isearch-forward)
-(global-set-key (kbd "M-s-f") #'isearch-backward)
-(global-key-binding (kbd "s-g") #'isearch-repeat-forward)
-(global-key-binding (kbd "M-s-g") #'isearch-repeat-backward)
+;; (global-set-key (kbd "s-f") #'isearch-forward)
+;; (global-set-key (kbd "M-s-f") #'isearch-backward)
+;; (global-key-binding (kbd "s-g") #'isearch-repeat-forward)
+;; (global-key-binding (kbd "M-s-g") #'isearch-repeat-backward)
 
 (global-set-key (kbd "s-F") #'rgrep)
-(global-set-key (kbd "s-G") #'next-error)
-(global-set-key (kbd "M-s-G") #'previous-error)
+;; (global-set-key (kbd "s-G") #'next-error)
+;; (global-set-key (kbd "M-s-G") #'previous-error)
 
-(global-set-key (kbd "s-r") #'query-replace)
+;; (global-set-key (kbd "s-r") #'query-replace)
 
-(global-unset-key (kbd "s-d"))  ; used to be isearch-repeat-forward (?)
+;; (global-unset-key (kbd "s-d"))  ; used to be isearch-repeat-forward (?)
 
 ;; ESC ESC ESC is bound to keyboard-escape-quit by default which
 ;; happens to kill all other windows and I hate it. This is handier:
@@ -172,7 +173,7 @@
       (global-set-key (kbd "s-v") #'yank)
       (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
       (global-set-key (kbd "s-z") #'undo)
-      (global-set-key (kbd "s-s") #'save-buffer)
+      ;; (global-set-key (kbd "s-s") #'save-buffer)
       (global-set-key (kbd "s-f") #'isearch-forward)))
 
 ;;;; Common sense stuff which also isn't too hard on my hands...
@@ -199,20 +200,22 @@
       ;; ≤¥≈ç√∫~µ∞…–
       ;; ≥‡ÙÇ◊‹›˘˛÷—
 
-      (setq mac-right-option-modifier 'meta)
-      (global-set-key (kbd "M-5") "[")
-      (global-set-key (kbd "M-6") "]")
-      (global-set-key (kbd "M-7") "|")
-      (global-set-key (kbd "M-/")
-        ; For some reason, I cannot just use "\\"
-        (lambda () (interactive) (insert "\\")))  ;used to be dabbrev-expand
-      (global-set-key (kbd "M-8") "{")
-      (global-set-key (kbd "M-9") "}")
-      (global-set-key (kbd "M-l") "@")
-      (global-set-key (kbd "M-n") "~")
+      (when nil  ;; TODO: define has-mac-keyboard-p
+        (global-set-key (kbd "M-5") "[")
+        (global-set-key (kbd "M-6") "]")
+        (global-set-key (kbd "M-7") "|")
+        (global-set-key (kbd "M-/")
+                                        ; For some reason, I cannot just use "\\"
+                        (lambda () (interactive) (insert "\\")))  ;used to be dabbrev-expand
+        (global-set-key (kbd "M-8") "{")
+        (global-set-key (kbd "M-9") "}")
+        (global-set-key (kbd "M-l") "@")
+        (global-set-key (kbd "M-n") "~"))
 
       ;(global-set-key (kbd "s-y") #'yank)   ; easier on the hand
 
+      
+      (setq mac-right-option-modifier 'meta)
       ; I don't have a right control key. Use right command.
       (setq mac-right-command-modifier 'control)))
 
