@@ -38,6 +38,7 @@
      (sh-mode . company-complete))))
  '(tabbar-mode t nil (tabbar))
  '(tabbar-separator (quote (" ")))
+ '(tramp-verbose 1)
  '(vc-annotate-background "#181e26")
  '(vc-annotate-color-map
    (quote
