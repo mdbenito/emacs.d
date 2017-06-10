@@ -16,6 +16,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configuration
 
+;; Increase threshold for garbage collection: only every 20MB
+;; allocated instead of every 0.79 by default (should improve e.g. flx-ido)
+(setq gc-cons-threshold 20000000)
+
 ;; Customized variables
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)

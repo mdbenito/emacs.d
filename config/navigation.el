@@ -16,8 +16,12 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (ido-mode t)
 
-;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
-(setq ido-enable-flex-matching t)
+;; Use flx-ido for better, fuzzier matching
+(flx-ido-mode t)
+(setq ido-enable-flex-matching t)  ;; disable ido faces to see flx highlights
+(setq ido-use-faces nil)
+;; Above this many competions fall back to (faster) ido-flex
+(setq flx-ido-threshold 8000)
 
 ;; Turn this behavior off because it's annoying
 (setq ido-use-filename-at-point nil)
