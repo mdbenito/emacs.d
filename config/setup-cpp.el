@@ -56,7 +56,27 @@
 (define-key c++-mode-map (kbd "C-M-<left>") #'backward-sentence)
 (define-key c++-mode-map (kbd "C-M-<right>") #'forward-sentence)
 
+(require 'spinner)
 
+(defvar mdb--compilation-starting-buffer nil
+  "The buffer from which a compilation originated.")
+
+;; See https://www.emacswiki.org/emacs/CompileCommand
+(defun recompile-quietly ()
+  "Re-compile without changing the window configuration."
+  (interactive)
+  (setq mdb--compilation-starting-buffer (current-buffer))
+  (spinner-start 'vertical-breathing)
+  (save-window-excursion
+    (recompile)))
+
+(defun mdb--stop-compilation-spinner (buffer whatever)  
+  (with-current-buffer mdb--compilation-starting-buffer
+    (spinner-stop)))
+
+(define-key c-mode-base-map (kbd "<f5>") #'recompile-quietly)
+
+(push #'mdb--stop-compilation-spinner compilation-finish-functions)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; rtags kicks ass
@@ -78,6 +98,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-ide should make my life easier... But it doesn't
-;; (cmake-ide-setup)
+(cmake-ide-setup)
 ;; (setq cmake-ide-build-pool-dir "~/Devel/builds")
 ;; (setq cmake-ide-build-pool-use-persistent-naming t)
