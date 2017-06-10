@@ -94,6 +94,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Theme tweaks
 
+(require 'solaire-mode)
 (require 'doom-themes)
 
 (defun mbd--load-theme-before (theme &optional no-confirm no-enable)
@@ -116,8 +117,8 @@
   "Advice for after load-theme.
 Removes hooks which could conflict with other themes, etc."
   (cond ((not (member theme '(doom-one doom-molokai doom-one-light)))
-         (when (and (mbd--remove-hook-test 'minibuffer-setup-hook #'doom-brighten-minibuffer)
-                    (mbd--remove-hook-test 'find-file-hook #'doom-buffer-mode))
+         (when (and (mbd--remove-hook-test 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
+                    (mbd--remove-hook-test 'after-change-major-mode-hook #'turn-on-solaire-mode))
            (message "Removed doom-one hooks"))
            ;; Remove ourselves from load-theme.
            ;; BUT THEN: we need to call advice-add upon loading the theme...
@@ -130,9 +131,9 @@ Removes hooks which could conflict with other themes, etc."
         ((equal theme 'doom-one)
          (message "Adding doom-one hooks")
          ;; Set doom-buffer-mode for all open buffers
-         (mapc (lambda (b) (with-current-buffer b (doom-buffer-mode))) (buffer-list))
-         (add-hook 'find-file-hook #'doom-buffer-mode)
-         (add-hook 'minibuffer-setup-hook #'doom-brighten-minibuffer)
+         (mapc (lambda (b) (with-current-buffer b (turn-on-solaire-mode))) (buffer-list))
+         (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
+         (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
          (custom-theme-set-faces
           'doom-one
           `(mode-line ((t (:foreground "#bbc2cf" :background "#444455"))))
