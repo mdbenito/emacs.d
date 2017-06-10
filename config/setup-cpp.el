@@ -24,6 +24,8 @@
 (require 'rtags)
 (require 'cc-mode)
 
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 (defun remove-from-list (l what)
   (setq l (delete what l)))
 
@@ -47,6 +49,14 @@
     (flycheck-select-checker 'rtags)))
 
 (add-hook 'c-mode-common-hook #'mbd--c-mode-common-config)
+
+
+ ;; I've defined these for prog-mode too, but they seem to have
+ ;; no effect in c++
+(define-key c++-mode-map (kbd "C-M-<left>") #'backward-sentence)
+(define-key c++-mode-map (kbd "C-M-<right>") #'forward-sentence)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; rtags kicks ass

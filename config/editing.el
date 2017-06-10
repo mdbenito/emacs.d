@@ -160,6 +160,9 @@
 
 (define-key prog-mode-map (kbd "M-<left>") #'backward-symbol)
 (define-key prog-mode-map (kbd "M-<right>") #'forward-symbol)
+;; Are these are ignored in c++? See init-cpp
+(define-key prog-mode-map (kbd "C-M-<left>") #'backward-sentence)
+(define-key prog-mode-map (kbd "C-M-<right>") #'forward-sentence)
 
 (global-set-key (kbd "M-p") #'fill-paragraph)
 
