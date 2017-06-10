@@ -8,18 +8,23 @@
 ;; sequence ‘C-c <left>’.  If you change your mind (while undoing),
 ;; you can press ‘C-c <right>’ (calling ‘winner-redo’)."
 ;;;;; No need for winner-mode if using workgroups2
-;(winner-mode 1)
+(winner-mode 1)
+(global-set-key (kbd "C-c C-z") #'winner-undo)
+(global-set-key (kbd "C-c C-S-z") #'winner-redo)
+(desktop-save-mode 1)
 
-(require 'workgroups2)
-(setq wg-session-file     "~/.emacs.d/workgroups"
-      wg-prefix-key                   (kbd "s-w")
-      wg-emacs-exit-save-behavior           'ask ; 'save 'ask or nil
-      wg-workgroups-mode-exit-save-behavior 'ask ; 'save 'ask or nil
-      wg-mode-line-display-on                nil)
+(global-unset-key (kbd "s-w"))   ;; was delete-frame
 
-(define-key wg-prefixed-map (kbd "z") #'wg-undo-wconfig-change)
-(define-key wg-prefixed-map (kbd "Z") #'wg-redo-wconfig-change)
-(workgroups-mode 1)
+;; (require 'workgroups2)
+;; (setq wg-session-file     "~/.emacs.d/workgroups"
+;;       wg-prefix-key                   (kbd "s-w")
+;;       wg-emacs-exit-save-behavior           'ask ; 'save 'ask or nil
+;;       wg-workgroups-mode-exit-save-behavior 'ask ; 'save 'ask or nil
+;;       wg-mode-line-display-on                nil)
+
+;; (define-key wg-prefixed-map (kbd "z") #'wg-undo-wconfig-change)
+;; (define-key wg-prefixed-map (kbd "Z") #'wg-redo-wconfig-change)
+;; (workgroups-mode 1)
 
 ;; Full path in title bar
 (setq-default frame-title-format "%b (%f)")
@@ -86,10 +91,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
-(advice-add #'neotree-toggle :before (lambda () (require 'all-the-icons)))
+(require 'all-the-icons)
 (global-set-key (kbd "<f8>") #'neotree-toggle)
 (customize-set-variable 'neo-theme (if window-system 'icons 'arrow))
-
+;; Make neotree's root follow the current buffer (this has to be set to some
+;; value or an obnoxious dialog will pop up) 
+(setq neo-force-change-root t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Theme tweaks
