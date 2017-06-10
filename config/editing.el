@@ -166,6 +166,7 @@
 
 (global-set-key (kbd "M-p") #'fill-paragraph)
 
+
 ;; Mac shortcuts for linux:
 (if (eq system-type 'gnu/linux)
     (progn 
@@ -182,7 +183,8 @@
 ;;;; Common sense stuff which also isn't too hard on my hands...
 (if (eq system-type 'darwin)
     (progn
-      ;; Right option is used to type []{} in german keyboard,
+                            
+      ;; Right option is used to type []{} in german mac keyboard,
       ;; We leave it as meta for emacs but retain the keystrokes we need
       ;; These are the output of each row of the keyboard, then with alt,
       ;; then with shift+alt
@@ -202,7 +204,6 @@
       ;; <yxcvbnm,.-
       ;; ≤¥≈ç√∫~µ∞…–
       ;; ≥‡ÙÇ◊‹›˘˛÷—
-
       (when nil  ;; TODO: define has-mac-keyboard-p
         (global-set-key (kbd "M-5") "[")
         (global-set-key (kbd "M-6") "]")
@@ -220,7 +221,9 @@
       
       (setq mac-right-option-modifier 'meta)
       ; I don't have a right control key. Use right command.
-      (setq mac-right-command-modifier 'control)))
+      (setq mac-right-command-modifier 'control)
+      (global-unset-key (kbd "C-z"))  ;; was suspend-frame
+      (global-set-key (kbd "C-z") #'undo)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -12,7 +12,7 @@
 
 (require 'workgroups2)
 (setq wg-session-file     "~/.emacs.d/workgroups"
-      wg-prefix-key                 (kbd "s-w")
+      wg-prefix-key                   (kbd "s-w")
       wg-emacs-exit-save-behavior           'ask ; 'save 'ask or nil
       wg-workgroups-mode-exit-save-behavior 'ask ; 'save 'ask or nil
       wg-mode-line-display-on                nil)
@@ -87,7 +87,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree
 (advice-add #'neotree-toggle :before (lambda () (require 'all-the-icons)))
-(global-set-key (kbd "C-c n") #'neotree-toggle)
+(global-set-key (kbd "<f8>") #'neotree-toggle)
 (customize-set-variable 'neo-theme (if window-system 'icons 'arrow))
 
 
