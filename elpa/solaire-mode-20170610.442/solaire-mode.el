@@ -7,7 +7,7 @@
 ;; Created: Jun 03, 2017
 ;; Modified: Jun 04, 2017
 ;; Version: 1.0.0
-;; Package-Version: 20170604.547
+;; Package-Version: 20170610.442
 ;; Keywords: dim bright window buffer faces
 ;; Homepage: https://github.com/hlissner/emacs-solaire-mode
 ;; Package-Requires: ((emacs "24.4") (cl-lib "0.5"))
@@ -132,8 +132,9 @@ telephone-line, so it's best to simply turn this off for those plugins."
                   (assq-delete-all fc solaire-mode-remap-faces)))))
     (dolist (remap solaire-mode-remap-faces)
       (setq face-remapping-alist (delete remap face-remapping-alist)))
-    (unless (cl-some (lambda (buf) (buffer-local-value 'solaire-mode buf))
-                     (buffer-list))
+    (unless (cl-loop for buf in (buffer-list)
+                     when (buffer-local-value 'solaire-mode buf)
+                     return t)
       (set-face-background 'fringe (face-background 'default)))))
 
 ;;;###autoload
@@ -169,12 +170,12 @@ Does nothing if it doesn't represent a real, file-visiting buffer (see
         (solaire-mode -1)
         (solaire-mode +1)))))
 
-(defun solaire-mode--persp-mode-reload (&rest _)
+;;;###autoload
+(defun solaire-mode-restore-persp-mode-buffers (&rest _)
   "Restore `solaire-mode' in buffers when `persp-mode' loads a session."
   (dolist (buf (persp-buffer-list))
     (with-current-buffer buf
       (turn-on-solaire-mode))))
-(advice-add #'persp-load-state-from-file :after #'solaire-mode--persp-mode-reload)
 
 (defun solaire-mode--face-remap-add-relative (orig-fn &rest args)
   "Minimize interference from other themes, functions and/or packages trying to

@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "solaire-mode" "solaire-mode.el" (22843 51836
+;;;### (autoloads nil "solaire-mode" "solaire-mode.el" (22844 19921
 ;;;;;;  0 0))
 ;;; Generated autoloads from solaire-mode.el
 
@@ -35,6 +35,11 @@ Highlight the minibuffer whenever it is active.
 Reset all buffers with `solaire-mode' enabled.
 
 \(fn)" t nil)
+
+(autoload 'solaire-mode-restore-persp-mode-buffers "solaire-mode" "\
+Restore `solaire-mode' in buffers when `persp-mode' loads a session.
+
+\(fn &rest _)" nil nil)
 
 ;;;***
 

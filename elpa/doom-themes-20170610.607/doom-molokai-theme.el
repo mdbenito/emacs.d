@@ -1,4 +1,4 @@
-;; DOOM Molokai (inspired by Textmate's monokai)
+;; doom-molokai-theme.el --- inspired by Textmate's monokai
 (require 'doom-themes)
 
 ;;
@@ -26,9 +26,9 @@ determine the exact padding."
    (bg-alt     '("#222323" nil       nil))
    (base0      '("#000000"))
    (base1      '("#151617" "#101010" "brightblack"))
-   (base2      `("#1d1f20" "#191919" "brightblack"))
-   (base3      `("#2d2e2e" "#252525" "brightblack"))
-   (base4      `("#4e4e4e" "#454545" "brightblack"))
+   (base2      '("#1d1f20" "#191919" "brightblack"))
+   (base3      '("#2d2e2e" "#252525" "brightblack"))
+   (base4      '("#4e4e4e" "#454545" "brightblack"))
    (base5      '("#555556" "#6b6b6b" "brightblack"))
    (base6      '("#767679" "#7b7b7b" "brightblack"))
    (base7      '("#cfc0c5" "#c1c1c1" "brightblack"))
@@ -52,11 +52,10 @@ determine the exact padding."
    ;; face categories
    (highlight      orange)
    (vertical-bar   base2)
-   (current-line   `(,(doom-lighten (car bg) 0.05) "#1f1f1f"))
    (selection      base0)
    (builtin        orange)
    (comments       (if doom-molokai-brighter-comments violet base5))
-   (doc-comments   (if doom-molokai-brighter-comments (doom-lighten violet 0.1) (doom-lighten base5 0.2)))
+   (doc-comments   (if doom-molokai-brighter-comments (doom-lighten violet 0.1) (doom-lighten base5 0.25)))
    (constants      orange)
    (functions      green)
    (keywords       magenta)
@@ -75,6 +74,7 @@ determine the exact padding."
    (vc-deleted     red)
 
    ;; custom categories
+   (org-quote   `(,(doom-lighten (car bg) 0.05) "#1f1f1f"))
    (modeline-pad
     (when doom-molokai-padded-modeline
       (if (integerp doom-molokai-padded-modeline) doom-molokai-padded-modeline 4))))
@@ -138,11 +138,11 @@ determine the exact padding."
    (css-proprietary-property :foreground keywords)
 
    ;; markdown-mode
-   (markdown-header-face     :foreground orange)
-   (markdown-blockquote-face :foreground dark-blue)
-   (markdown-markup-face     :foreground cyan)
-   (markdown-list-face       :foreground magenta)
-   (markdown-pre-face        :foreground cyan)
+   (markdown-blockquote-face :inherit 'italic :foreground dark-blue)
+   (markdown-list-face :foreground magenta)
+   (markdown-pre-face  :foreground cyan)
+   (markdown-link-face :inherit 'bold :foreground blue)
+   (markdown-code-face :background (doom-lighten base2 0.045))
 
    ;; org-mode
    (org-level-1 :background base2 :foreground magenta :bold bold :height 1.2)
@@ -153,7 +153,7 @@ determine the exact padding."
    (org-level-6 :inherit 'org-level-3)
    (org-ellipsis :underline nil :background base2 :foreground orange)
    (org-tag :foreground yellow :bold nil)
-   (org-quote :inherit 'italic :foreground base7 :background current-line)
+   (org-quote :inherit 'italic :foreground base7 :background org-quote)
    (org-todo :foreground yellow :bold 'inherit)
    (org-list-dt :foreground yellow))
 

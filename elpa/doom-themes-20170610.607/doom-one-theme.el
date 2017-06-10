@@ -1,4 +1,4 @@
-;; DOOM One Dark (inspired by Atom One Dark)
+;;; doom-one-theme.el --- inspired by Atom One Dark
 (require 'doom-themes)
 
 ;;
@@ -63,7 +63,6 @@ determine the exact padding."
    ;; face categories -- required for all themes
    (highlight      blue)
    (vertical-bar   base2)
-   (current-line   `(,(car base1) ,@(cdr base0)))
    (selection      dark-blue)
    (builtin        magenta)
    (comments       (if doom-one-brighter-comments dark-cyan base5))
@@ -137,7 +136,12 @@ determine the exact padding."
    ;; css-mode / scss-mode
    (css-proprietary-property :foreground orange)
    (css-property             :foreground green)
-   (css-selector             :foreground blue))
+   (css-selector             :foreground blue)
+
+   ;; markdown-mode
+   (markdown-markup-face :foreground base5)
+   (markdown-header-face :inherit 'bold :foreground red)
+   (markdown-code-face :background (doom-lighten base3 0.05)))
 
 
   ;; --- extra variables ---------------------

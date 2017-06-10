@@ -1,4 +1,4 @@
-;;; doom-nova-theme.el
+;;; doom-nova-theme.el --- inspired by Trevord Miller's Nova
 (require 'doom-themes)
 
 (defgroup doom-nova-theme nil
@@ -12,7 +12,8 @@ determine the exact padding."
   :type '(or integer boolean))
 
 (def-doom-theme doom-nova
-  "A light theme inspired by Atom One Light."
+  "A light theme inspired by Trevord Miller's Nova. See
+<https://trevordmiller.com/projects/nova>."
 
   ;; name      gui
   ((bg         '("#3c4c55" nil       nil))
@@ -50,7 +51,6 @@ determine the exact padding."
    ;; face categories
    (highlight      cyan)
    (vertical-bar   (doom-lighten bg-alt 0.1))
-   (current-line   (doom-lighten bg-alt 0.04))
    (selection      (doom-lighten highlight 0.6))
    (builtin        blue)
    (comments       grey)
@@ -73,6 +73,7 @@ determine the exact padding."
    (vc-deleted     red)
 
    ;; custom categories
+   (current-line    (doom-lighten bg-alt 0.04))
    (modeline-bg     bg-alt)
    (modeline-bg-alt (doom-lighten bg 0.035))
    (modeline-fg     blue)

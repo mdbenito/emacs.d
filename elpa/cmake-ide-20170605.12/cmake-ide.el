@@ -271,7 +271,7 @@ flags."
         (cmake-ide--add-file-to-buffer-list)
 
         (let ((default-directory (cmake-ide--get-build-dir)))
-          (cmake-ide--run-cmake-impl project-dir (cmake-ide--get-build-dir))
+          (cmake-ide--run-cmake-impl project-dir default-directory)
           (cmake-ide--register-callback))))))
 
 (defun cmake-ide--message (str &rest vars)

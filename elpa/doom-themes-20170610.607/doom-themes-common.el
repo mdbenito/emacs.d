@@ -1,4 +1,4 @@
-;;; doom-themes-common.el
+;;; doom-themes-common.el -*- lexical-binding: t; -*-
 
 (defconst doom-themes-common-faces
   '(;; --- custom faces -----------------------
@@ -324,11 +324,11 @@
 
     ;; helm
     (helm-selection
-     (&all :inherit 'bold :background current-line)
+     (&all :inherit 'bold :background base2)
      (&dark  :distant-foreground highlight)
      (&light :distant-foreground base0))
     (helm-match :foreground highlight :distant-foreground base8 :underline t)
-    (helm-source-header          :background current-line :foreground base5)
+    (helm-source-header          :background base2 :foreground base5)
     (helm-swoop-target-line-face :foreground highlight :inverse-video t)
     (helm-visible-mark           :inherit '(bold highlight))
     (helm-ff-file                :foreground fg)
@@ -623,7 +623,7 @@
 
     ;; workgroups2
     (wg-current-workgroup-face :foreground base0 :background highlight)
-    (wg-other-workgroup-face   :foreground base5 :background current-line)
+    (wg-other-workgroup-face   :foreground base5)
     (wg-divider-face           :foreground grey)
     (wg-brace-face             :foreground highlight)
 
@@ -678,14 +678,11 @@
     (makefile-targets :foreground blue)
 
     ;; markdown-mode
-    (markdown-header-face           :foreground red)
+    (markdown-header-face           :inherit 'bold :foreground highlight)
     (markdown-header-delimiter-face :inherit 'markdown-header-face)
     (markdown-metadata-key-face     :foreground red)
-    (markdown-markup-face           :foreground base5)
-    (markdown-pre-face              :foreground green)
-    (markdown-inline-face           :foreground cyan)
     (markdown-list-face             :foreground red)
-    (markdown-link-face             :foreground blue    :bold nil)
+    (markdown-link-face             :inherit 'bold :foreground blue)
     (markdown-url-face              :foreground magenta :bold nil)
     (markdown-header-face-1         :inherit 'markdown-header-face)
     (markdown-header-face-2         :inherit 'markdown-header-face)
@@ -695,12 +692,11 @@
     (markdown-header-face-6         :inherit 'markdown-header-face)
     (markdown-italic-face           :inherit 'italic :foreground violet)
     (markdown-bold-face             :inherit 'bold   :foreground orange)
-    ;; (markdown-header-rule-face      :inherit 'shadow)
-    ;; (markdown-markup-face           :foreground operators)
-    ;; (markdown-link-face             :inherit 'shadow)
-    ;; (markdown-link-title-face       :inherit 'link)
-    ;; (markdown-url-face              :inherit 'link)
-    ;; (markdown-blockquote-face       :foreground violet)
+    (markdown-markup-face           :foreground operators)
+    (markdown-blockquote-face       :inherit 'italic :foreground doc-comments)
+    (markdown-pre-face              :foreground strings)
+    (markdown-code-face :background base3)
+    (markdown-inline-code-face :inherit '(markdown-code-face markdown-pre-face))
 
     ;; org-agenda
     (org-agenda-structure :foreground blue)
@@ -814,7 +810,8 @@
 
 ;; Library
 (defvar doom-themes--colors)
-(defvar doom-themes--min-colors '(257 256 16))
+(defvar doom--min-colors '(257 256 16))
+(defvar doom--quoted-p nil)
 
 (defun doom-themes--colors-p (item)
   "TODO"
@@ -824,11 +821,11 @@
              (cond ((memq car '(quote doom-color)) nil)
 
                    ((memq car '(backquote \`))
-                    (let ((quoted t))
+                    (let ((doom--quoted-p t))
                       (doom-themes--colors-p (cdr item))))
 
                    ((eq car '\,)
-                    (let (quoted)
+                    (let (doom--quoted-p)
                       (doom-themes--colors-p (cdr item))))
 
                    (t
@@ -837,14 +834,13 @@
 
           ((and (symbolp item)
                 (not (keywordp item))
-                (assq item doom-themes--colors)
-                (not (bound-and-true-p quoted)))))))
+                (not doom--quoted-p)
+                (assq item doom-themes--colors))))))
 
 (defun doom-themes--colorize (item type)
   "TODO"
   (when item
-    (let ((quoted (bound-and-true-p quoted))
-          (type (and (boundp 'type) type)))
+    (let ((doom--quoted-p doom--quoted-p))
       (cond ((and (listp item)
                   (memq (car item) '(quote doom-color)))
              item)
@@ -852,18 +848,19 @@
             ((listp item)
              (let* ((item (append item nil))
                     (car (car item))
-                    (quoted (cond ((memq car '(backquote \`)) t)
-                                  ((eq car '\,) nil)
-                                  (t quoted))))
+                    (doom--quoted-p
+                     (cond ((memq car '(backquote \`)) t)
+                           ((eq car '\,) nil)
+                           (t doom--quoted-p))))
                `(,car
-                 ,@(let (forms)
-                     (dolist (i (cdr item) (nreverse forms))
-                       (push (doom-themes--colorize i type) forms))))))
+                 ,@(cl-loop
+                    for i in (cdr item)
+                    collect (doom-themes--colorize i type)))))
 
             ((and (symbolp item)
                   (not (keywordp item))
                   (assq item doom-themes--colors)
-                  (not quoted))
+                  (not doom--quoted-p))
              `(doom-color ',item ',type))
 
             (t item)))))
@@ -876,7 +873,7 @@
             (let ((real-attrs (cdr face))
                   defs)
               (cond ((doom-themes--colors-p real-attrs)
-                     (dolist (cl doom-themes--min-colors `(list ,@(nreverse defs)))
+                     (dolist (cl doom--min-colors `(list ,@(nreverse defs)))
                        (push `(list '((class color) (min-colors ,cl))
                                     (list ,@(doom-themes--colorize real-attrs cl)))
                              defs)))
@@ -897,7 +894,7 @@
                        (let ((bg (if (eq (car attrs) '&dark) 'dark 'light))
                              (real-attrs (append all-attrs (cdr attrs) '())))
                          (cond ((doom-themes--colors-p real-attrs)
-                                (dolist (cl doom-themes--min-colors)
+                                (dolist (cl doom--min-colors)
                                   (push `(list '((class color) (min-colors ,cl) (background ,bg))
                                                (list ,@(doom-themes--colorize real-attrs cl)))
                                         defs)))
