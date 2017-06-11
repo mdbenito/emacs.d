@@ -66,7 +66,7 @@
   "Re-compile without changing the window configuration."
   (interactive)
   (setq mdb--compilation-starting-buffer (current-buffer))
-  (spinner-start 'vertical-breathing)
+  (spinner-start 'progress-bar-filled)
   (save-window-excursion
     (recompile)))
 
