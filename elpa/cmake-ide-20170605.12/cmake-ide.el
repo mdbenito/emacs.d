@@ -203,7 +203,12 @@ the closest possible matches available in cppcheck."
 
 (defun cmake-ide--build-dir-var ()
   "Return the value of cmake-ide-build-dir or cmake-ide-dir."
-  (or cmake-ide-build-dir cmake-ide-dir))
+  ;; default-directory is buffer local and non nil if we are in a
+  ;; remote buffer. Assume that cmake-ide-build-dir always has a local
+  ;; path (i.e. valid at the remote machine)
+  (if cmake-ide-build-dir
+      (concat (file-remote-p default-directory) cmake-ide-build-dir)
+      cmake-ide-dir))
 
 (defun cmake-ide--mode-hook()
   "Function to add to a major mode hook"
@@ -580,8 +585,11 @@ the object file's name just above."
   "Run the CMake process for PROJECT-DIR in CMAKE-DIR."
   (when project-dir
     (let ((default-directory cmake-dir))
-      (cmake-ide--message "Running cmake for src path %s in build path %s" project-dir cmake-dir)
-      (start-file-process "cmake" "*cmake*" cmake-ide-cmake-command "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" project-dir))))
+      (cmake-ide--message "Running cmake for src path %sx in build path %s" project-dir cmake-dir)
+      ;; (cmake-ide--message "cmake command: \"%s\"" cmake-ide-cmake-command)
+      (start-file-process "cmake" "*cmake*" cmake-ide-cmake-command
+                          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+                          (file-remote-p project-dir 'localname)))))
 
 
 (defun cmake-ide--get-build-dir ()
