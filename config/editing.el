@@ -66,6 +66,9 @@
     ;; Handy key definition
 (global-set-key (kbd "C-c M-q") #'unfill-region)
 
+(require 'expand-region)
+(global-set-key (kbd "M-SPC") 'er/expand-region)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting lines and regions
 
