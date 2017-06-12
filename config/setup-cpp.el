@@ -70,9 +70,13 @@
   (save-window-excursion
     (recompile)))
 
-(defun mdb--stop-compilation-spinner (buffer whatever)  
-  (with-current-buffer mdb--compilation-starting-buffer
-    (spinner-stop)))
+(defun mdb--stop-compilation-spinner (buffer whatever)
+  ;; not every compilation begins with recompile-quietl, e.g.
+  ;; grep searches are "compilations" but we don't set a spinner
+  ;; for them. That might be nice , though
+  (when mdb--compilation-starting-buffer
+    (with-current-buffer mdb--compilation-starting-buffer
+      (spinner-stop))))
 
 (define-key c-mode-base-map (kbd "<f5>") #'recompile-quietly)
 
