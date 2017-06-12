@@ -208,6 +208,7 @@ Removes hooks which could conflict with other themes, etc."
 ;; FIXME: Silly mode icons refuse to work in daemon mode?!?!
 ;(eval-after-load #'mode-icons-mode
 ;  (mode-icons-mode t))
+(mode-icons-mode t)
 
 ;; Remove useless minor mode names from modeline
 (delight '((doom-buffer-mode "")
