@@ -34,7 +34,7 @@
 ;;
 
 (defun mbd--complete-or-indent ()
-  (interactive "P")
+  (interactive)
   (if (use-region-p)
       (indent-region (region-beginning) (region-end))
     (company-complete)))
