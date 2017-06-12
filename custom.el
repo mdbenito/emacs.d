@@ -45,7 +45,9 @@
      (package :foreground "#cc7832")
      (deprecated :strike-through "#a9b7c6"))))
  '(fci-rule-color "#5D656B")
- '(global-smart-tab-mode t)
+ '(hippie-expand-try-functions-list
+   (quote
+    (company-complete try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
  '(jdee-db-active-breakpoint-face-colors (cons "#181e26" "#51afef"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#181e26" "#7bc275"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#181e26" "#3D3D48"))
@@ -59,7 +61,7 @@
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (expand-region spinner solaire-mode flx flx-ido flx-isearch ein matlab-mode easy-hugo clojure-mode company-rtags flycheck flycheck-rtags company-irony company-c-headers web-mode yaml-mode rtags anaconda-mode docker-tramp realgud delight company-anaconda bash-completion powerline 4clojure magit magit-popup neotree page-break-lines popup projectile popup-complete popwin cider ac-cider company company-shell conda ido-at-point ido-completing-read+ magit-filenotify magit-find-file magit-gh-pulls magit-gitflow magithub rotate cython-mode multiple-cursors paradox smart-tab nlinum cmake-ide cmake-mode dockerfile-mode all-the-icons doom-themes tabbar markdown-mode markdown-preview-eww markdown-toc sr-speedbar smooth-scrolling workgroups2 tagedit smex rainbow-delimiters paredit move-text modern-cpp-font-lock ido-ubiquitous flycheck-irony flycheck-cython flycheck-clojure flycheck-clangcheck exec-path-from-shell darcula-theme company-statistics company-irony-c-headers clojure-mode-extra-font-locking mode-icons)))
+    (expand-region spinner solaire-mode flx flx-ido flx-isearch ein matlab-mode easy-hugo clojure-mode company-rtags flycheck flycheck-rtags company-irony company-c-headers web-mode yaml-mode rtags anaconda-mode docker-tramp realgud delight company-anaconda bash-completion powerline 4clojure magit magit-popup neotree page-break-lines popup projectile popup-complete popwin cider ac-cider company company-shell conda ido-at-point ido-completing-read+ magit-filenotify magit-find-file magit-gh-pulls magit-gitflow magithub rotate cython-mode multiple-cursors paradox nlinum cmake-ide cmake-mode dockerfile-mode all-the-icons doom-themes tabbar markdown-mode markdown-preview-eww markdown-toc sr-speedbar smooth-scrolling workgroups2 tagedit smex rainbow-delimiters paredit move-text modern-cpp-font-lock ido-ubiquitous flycheck-irony flycheck-cython flycheck-clojure flycheck-clangcheck exec-path-from-shell darcula-theme company-statistics company-irony-c-headers clojure-mode-extra-font-locking mode-icons)))
  '(paradox-automatically-star nil)
  '(realgud-bp-fringe-indicator-style (quote (realgud-bp-filled . realgud-bp-hollow)))
  '(safe-local-variable-values
@@ -69,18 +71,6 @@
      (easy-hugo-basedir . "~/Devel/web/paperwhy")
      (easy-hugo-previewtime . "300")
      (pythonic-environment . "~/Applications/miniconda3/envs/py3"))))
- '(smart-tab-completion-functions-alist
-   (quote
-    ((emacs-lisp-mode . company-complete)
-     (text-mode . company-complete)
-     (python-mode . company-complete)
-     (anaconda-mode . company-complete)
-     (c-mode . company-complete)
-     (c++-mode . company-complete)
-     (clojure-mode . ac-complete)
-     (lisp-interaction-mode . company-complete)
-     (inferior-emacs-lisp-mode . company-complete)
-     (sh-mode . company-complete))))
  '(tabbar-mode t nil (tabbar))
  '(tabbar-separator (quote (" ")))
  '(tramp-verbose 1)

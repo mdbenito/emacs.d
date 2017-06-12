@@ -7,7 +7,8 @@
 ;; http://www.emacswiki.org/emacs/HippieExpand
 ;; Lisp-friendly hippie expand
 (setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
+      '(company-complete
+        try-expand-dabbr
         try-expand-dabbrev-all-buffers
         try-expand-dabbrev-from-kill
         try-complete-lisp-symbol-partially
@@ -23,8 +24,22 @@
 (add-hook 'after-init-hook #'global-company-mode)
 
 ;; Smart-Tab: automagically determines whether we want to indent or
-;; autocomplete. This is activated and configured in custom.el. NOTE:
-;; Need to add/fix config for all relevant major modes in custom.el
+;; autocomplete AND FAILS MISERABLY FOR C++ AND OTHER LANGUAGES. It is
+;; activated and configured in custom.el. NOTE: Need to add/fix config
+;; for all relevant major modes in custom.el The fail is because it
+;; uses (looking-at "\\_>") to decide whether point is at a place
+;; where completions are needed and this is of course not enough for
+;; e.g. python or c++ where we actually want
+;; (thing-at-point-looking-at "\\_>\."). So I'm disabling it.
+;;
+
+(defun mbd--complete-or-indent ()
+  (interactive "P")
+  (if (use-region-p)
+      (indent-region (region-beginning) (region-end))
+    (company-complete)))
+
+(global-set-key (kbd "<tab>") #'mbd--complete-or-indent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
