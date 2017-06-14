@@ -24,6 +24,40 @@
 (define-key global-map (kbd "s-h") #'easy-hugo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto reload dir-local variables for all buffers in a directory
+;; after changes. Alternatively, reverting buffers should work too.
+;; Taken from https://emacs.stackexchange.com/questions/13080/
+
+(defun mbd--reload-dir-locals-for-all-buffers-in-this-directory ()
+  "For every buffer with the same `default-directory` as the 
+current buffer's, reload dir-locals."
+  (interactive)
+  (let ((dir default-directory))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (equal default-directory dir))
+        (mbd--reload-dir-locals-for-current-buffer)))))
+
+(defun mbd--reload-dir-locals-for-all-buffers-in-this-directory ()
+  "For every buffer with the same `default-directory` as the 
+current buffer's, reload dir-locals."
+  (interactive)
+  (let ((dir default-directory))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (equal default-directory dir))
+        (mbd--reload-dir-locals-for-current-buffer)))))
+
+(defun mbd--enable-autoreload-for-dir-locals ()
+  (when (and (buffer-file-name)
+             (equal dir-locals-file
+                    (file-name-nondirectory (buffer-file-name))))
+    (add-hook (make-variable-buffer-local 'after-save-hook)
+              'mbd--reload-dir-locals-for-all-buffers-in-this-directory)))
+
+(add-hook 'emacs-lisp-mode-hook #'mbd--enable-autoreload-for-dir-locals)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hide the first lines of grep and rgrep
 ;; Toggle between hidden and shown with a button
 
