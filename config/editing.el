@@ -37,9 +37,12 @@
   (interactive)
   (if (use-region-p)
       (indent-region (region-beginning) (region-end))
-    (company-complete)))
+    (if (minibufferp)
+        (dabbrev-expand nil)
+      (when (looking-back "[a-zA-Z\.>_-]")  ;; HACK: \s_ doesn't work (?)
+        (company-complete)))))
 
-(global-set-key (kbd "<tab>") #'mbd--complete-or-indent)
+(define-key prog-mode-map (kbd "<tab>") #'mbd--complete-or-indent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
