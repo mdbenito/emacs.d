@@ -206,9 +206,8 @@ the closest possible matches available in cppcheck."
   ;; default-directory is buffer local and non nil if we are in a
   ;; remote buffer. Assume that cmake-ide-build-dir always has a local
   ;; path (i.e. valid at the remote machine)
-  (if cmake-ide-build-dir
-      (concat (file-remote-p default-directory) cmake-ide-build-dir)
-      cmake-ide-dir))
+  (concat (file-remote-p default-directory)  
+          (if cmake-ide-build-dir cmake-ide-build-dir cmake-ide-dir)))
 
 (defun cmake-ide--mode-hook()
   "Function to add to a major mode hook"
@@ -594,7 +593,7 @@ the object file's name just above."
 
 (defun cmake-ide--get-build-dir ()
   "Return the directory name to run CMake in."
-  (if (not (cmake-ide--build-dir-var))
+  (if (not (cmake-ide--build-dir-var))  ; huh? (not "bla") is nil, so this runs if build-dir is def'd
       (let ((build-parent-directory (or cmake-ide-build-pool-dir temporary-file-directory))
             build-directory-name)
         (setq build-directory-name
@@ -602,6 +601,8 @@ the object file's name just above."
                   (replace-regexp-in-string "/" "_" (expand-file-name (cmake-ide--locate-cmakelists)))
                 (make-temp-name "cmake")))
         (setq cmake-ide-build-dir (expand-file-name build-directory-name build-parent-directory)))
+    (cmake-ide--message "Using build dir: %s" cmake-ide-build-dir)
+    (cmake-ide--message "cmake-ide--build-dir-var was: %s" (cmake-ide--build-dir-var))
     (when (not (file-name-absolute-p (cmake-ide--build-dir-var)))
       (setq cmake-ide-build-dir (expand-file-name (cmake-ide--build-dir-var) (cmake-ide--locate-cmakelists)))))
   (if (not (file-accessible-directory-p (cmake-ide--build-dir-var)))
@@ -973,7 +974,7 @@ the object file's name just above."
 
     (unless (cmake-ide--process-running-p "rdm")
       (let ((buf (get-buffer-create cmake-ide-rdm-buffer-name)))
-        (cmake-ide--message "Starting rdm server")
+        (cmake-ide--message "Starting rdm server '%s' for buffer '%s'" cmake-ide-rdm-rc-path (current-buffer))
         (with-current-buffer buf (start-file-process "rdm" (current-buffer)
                                                      cmake-ide-rdm-executable
                                                      "-c" cmake-ide-rdm-rc-path))))))
