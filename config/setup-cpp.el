@@ -33,7 +33,7 @@
   (when (derived-mode-p 'c-mode 'c++-mode)
     ;; irony doesn't support tramp (yet? 04.2017) Only use it on local files
     ;; it provides better completions than rtags
-    (if (tramp-tramp-file-p (buffer-file-name (current-buffer)))
+    (if (file-remote-p default-directory)
         (progn
           (remove-from-list company-backends 'company-irony)
           (remove-from-list company-backends 'company-c-headers)
