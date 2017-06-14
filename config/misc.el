@@ -21,7 +21,8 @@
       (let ((sy (symbol-at-point)))
         (,func (symbol-name sy))))))
 
-(define-key global-map (kbd "s-h") #'easy-hugo)
+;; I'm not using easy-hugo that much...
+;; (define-key global-map (kbd "s-h") #'easy-hugo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto reload dir-local variables for all buffers in a directory
