@@ -28,15 +28,11 @@
 ;; after changes. Alternatively, reverting buffers should work too.
 ;; Taken from https://emacs.stackexchange.com/questions/13080/
 
-(defun mbd--reload-dir-locals-for-all-buffers-in-this-directory ()
-  "For every buffer with the same `default-directory` as the 
-current buffer's, reload dir-locals."
+(defun mbd--reload-dir-locals-for-current-buffer ()
+  "reload dir locals for the current buffer"
   (interactive)
-  (let ((dir default-directory))
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (equal default-directory dir))
-        (mbd--reload-dir-locals-for-current-buffer)))))
+  (let ((enable-local-variables :all))
+    (hack-dir-local-variables-non-file-buffer)))
 
 (defun mbd--reload-dir-locals-for-all-buffers-in-this-directory ()
   "For every buffer with the same `default-directory` as the 
