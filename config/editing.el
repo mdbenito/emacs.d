@@ -19,7 +19,7 @@
 (add-hook 'shell-dynamic-complete-functions
           #'bash-completion-dynamic-complete)
 
-; Global complete any
+                                        ; Global complete any
 (require 'company)
 (add-hook 'after-init-hook #'global-company-mode)
 
@@ -64,7 +64,7 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Multiple cursors magic
-;(require 'multiple-cursors)  ; in custom.el
+                                        ;(require 'multiple-cursors)  ; in custom.el
 (global-set-key (kbd "<f6>") #'mc/mark-all-dwim)
 (global-set-key (kbd "<f7>") #'mc/edit-lines)
 
@@ -75,7 +75,7 @@
 
 ;; (global-set-key (kbd "s-f") #'mdb--isearch)
 
-; From https://www.emacswiki.org/emacs/UnfillRegion
+                                        ; From https://www.emacswiki.org/emacs/UnfillRegion
 (defun unfill-region (beg end)
   "Unfill the region, joining text paragraphs into a single
     logical line.  This is useful, e.g., for use with
@@ -83,8 +83,8 @@
   (interactive "*r")
   (let ((fill-column (point-max)))
     (fill-region beg end)))
-    
-    ;; Handy key definition
+
+;; Handy key definition
 (global-set-key (kbd "C-c M-q") #'unfill-region)
 
 (require 'expand-region)
@@ -103,7 +103,7 @@
         ;; FIXME: do something here to restore the region as it was...
         ;; (and set-mark is not it...)
         )
-      (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
 (global-set-key (kbd "C-;") #'mdb--comment-really-dwim)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -126,7 +126,7 @@
       (ns-get-selection-internal 'CLIPBOARD)
     (quit nil)))
 
-;(setq electric-indent-mode nil)
+                                        ;(setq electric-indent-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Files and backups
@@ -192,62 +192,62 @@
 
 
 ;; Mac shortcuts for linux:
-(if (eq system-type 'gnu/linux)
-    (progn 
-      (setq x-select-enable-clipboard t)
-      (global-set-key (kbd "s-x")
-                      (lambda () (interactive) (clipboard-kill-region nil nil t)))
-      (global-set-key (kbd "s-c") #'clipboard-kill-ring-save)
-      (global-set-key (kbd "s-v") #'yank)
-      (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
-      (global-set-key (kbd "s-z") #'undo)
-      ;; (global-set-key (kbd "s-s") #'save-buffer)
-      (global-set-key (kbd "s-f") #'isearch-forward)))
+(when (eq system-type 'gnu/linux) 
+  (setq x-select-enable-clipboard t)
+  (global-set-key (kbd "s-x")
+                  (lambda () (interactive) (clipboard-kill-region nil nil t)))
+  (global-set-key (kbd "s-c") #'clipboard-kill-ring-save)
+  (global-set-key (kbd "s-v") #'yank)
+  (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
+
+  (global-set-key (kbd "s-z") #'undo)
+  ;; (global-set-key (kbd "s-s") #'save-buffer)
+
+  (global-set-key (kbd "s-f") #'isearch-forward))
 
 ;;;; Common sense stuff which also isn't too hard on my hands...
-(if (eq system-type 'darwin)
-    (progn
-                            
-      ;; Right option is used to type []{} in german mac keyboard,
-      ;; We leave it as meta for emacs but retain the keystrokes we need
-      ;; These are the output of each row of the keyboard, then with alt,
-      ;; then with shift+alt
-      
-      ;; ^1234567890ß´
-      ;; „¡“¶¢[]|{}≠¿'
-      ;; “¬”#£ﬁ^\~·¯˙˚
+(when (eq system-type 'darwin)
+  ;; Right option is used to type []{} in german mac keyboard,
+  ;; We leave it as meta for emacs but retain the keystrokes we need
+  ;; These are the output of each row of the keyboard, then with alt,
+  ;; then with shift+alt
+  
+  ;; ^1234567890ß´
+  ;; „¡“¶¢[]|{}≠¿'
+  ;; “¬”#£ﬁ^\~·¯˙˚
 
-      ;; qwertzuiopü+
-      ;; «∑€®†Ω¨⁄øπ•±
-      ;; »„‰¸˝ˇÁÛØ∏°
+  ;; qwertzuiopü+
+  ;; «∑€®†Ω¨⁄øπ•±
+  ;; »„‰¸˝ˇÁÛØ∏°
 
-      ;; asdfghjklöä#
-      ;; å‚∂ƒ©ªº∆@œæ‘
-      ;; ÅÍ™ÏÌÓıˆﬂŒÆ’
+  ;; asdfghjklöä#
+  ;; å‚∂ƒ©ªº∆@œæ‘
+  ;; ÅÍ™ÏÌÓıˆﬂŒÆ’
 
-      ;; <yxcvbnm,.-
-      ;; ≤¥≈ç√∫~µ∞…–
-      ;; ≥‡ÙÇ◊‹›˘˛÷—
-      (when nil  ;; TODO: define has-mac-keyboard-p
-        (global-set-key (kbd "M-5") "[")
-        (global-set-key (kbd "M-6") "]")
-        (global-set-key (kbd "M-7") "|")
-        (global-set-key (kbd "M-/")
-                                        ; For some reason, I cannot just use "\\"
-                        (lambda () (interactive) (insert "\\")))  ;used to be dabbrev-expand
-        (global-set-key (kbd "M-8") "{")
-        (global-set-key (kbd "M-9") "}")
-        (global-set-key (kbd "M-l") "@")
-        (global-set-key (kbd "M-n") "~"))
+  ;; <yxcvbnm,.-
+  ;; ≤¥≈ç√∫~µ∞…–
+  ;; ≥‡ÙÇ◊‹›˘˛÷—
+  
+  (when nil  ;; TODO: define has-mac-keyboard-p
+    (global-set-key (kbd "M-5") "[")
+    (global-set-key (kbd "M-6") "]")
+    (global-set-key (kbd "M-7") "|")
+    (global-set-key (kbd "M-/")
+                    ;; For some reason, I cannot just use "\\"
+                    (lambda () (interactive) (insert "\\")))  ;used to be dabbrev-expand
+    (global-set-key (kbd "M-8") "{")
+    (global-set-key (kbd "M-9") "}")
+    (global-set-key (kbd "M-l") "@")
+    (global-set-key (kbd "M-n") "~"))
 
-      ;(global-set-key (kbd "s-y") #'yank)   ; easier on the hand
+  ;; (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
+ 
+  (setq mac-right-option-modifier 'meta)
+  ;; I don't have a right control key. Use right command.
 
-      
-      (setq mac-right-option-modifier 'meta)
-      ; I don't have a right control key. Use right command.
-      (setq mac-right-command-modifier 'control)
-      (global-unset-key (kbd "C-z"))  ;; was suspend-frame
-      (global-set-key (kbd "C-z") #'undo)))
+  (setq mac-right-command-modifier 'control)
+  ;; (global-unset-key (kbd "C-z"))  ;; was suspend-frame
+  (global-set-key (kbd "C-z") #'undo))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
