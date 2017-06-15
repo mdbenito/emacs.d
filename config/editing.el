@@ -47,6 +47,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
 
+(when (eq system-type 'darwin)
+  (define-key prog-mode-map (kbd "S-<f1>") #'dash-at-point))
+
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
 (set-face-background 'show-paren-match "#ddd")
