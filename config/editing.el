@@ -33,6 +33,8 @@
 ;; (thing-at-point-looking-at "\\_>\."). So I'm disabling it.
 ;;
 
+
+;; FIXME: this works poorly at best
 (defun mbd--complete-or-indent ()
   (interactive)
   (if (use-region-p)
@@ -43,12 +45,17 @@
         (company-complete)))))
 
 (define-key prog-mode-map (kbd "<tab>") #'mbd--complete-or-indent)
+(eval-after-load "c++-mode"
+  '(define-key c++-mode-map (kbd "<tab>") #'mbd--complete-or-indent))
 
+  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Misc
 
+(global-set-key (kbd "S-SPC") #'just-one-space)
+
 (when (eq system-type 'darwin)
-  (define-key prog-mode-map (kbd "S-<f1>") #'dash-at-point))
+  (global-set-key (kbd "S-<f1>") #'dash-at-point))
 
 ;; Highlights matching parenthesis
 (show-paren-mode 1)
