@@ -205,12 +205,14 @@
                   (lambda () (interactive) (clipboard-kill-region nil nil t)))
   (global-set-key (kbd "s-c") #'clipboard-kill-ring-save)
   (global-set-key (kbd "s-v") #'yank)
-  (global-set-key (kbd "s-y") #'yank)   ; easier on the hand
+  (global-set-key (kbd "C-v") #'yank)
+  ;; (global-set-key (kbd "s-y") #'yank)   ; easier on the hand (german keyboard)
 
   (global-set-key (kbd "s-z") #'undo)
+  (global-set-key (kbd "C-z") #'undo)
   ;; (global-set-key (kbd "s-s") #'save-buffer)
-
-  (global-set-key (kbd "s-f") #'isearch-forward))
+  ;; (global-set-key (kbd "s-f") #'isearch-forward))
+  )
 
 ;;;; Common sense stuff which also isn't too hard on my hands...
 (when (eq system-type 'darwin)

@@ -165,7 +165,9 @@ Removes hooks which could conflict with other themes, etc."
       ((string-prefix-p "PelMac" system-name)
        (set-face-attribute 'default nil :family "Menlo" :height 160))
       ((string-prefix-p "ingwer" system-name)
-       (set-face-attribute 'default nil :family "Ubuntu mono" :height 140)))
+       (set-face-attribute 'default nil :family "Ubuntu mono" :height 140))
+      ((string-prefix-p "HPel620" system-name)
+       (set-face-attribute 'default nil :family "Ubuntu mono" :height 100)))
 
 (blink-cursor-mode 0)
 
@@ -242,5 +244,8 @@ Removes hooks which could conflict with other themes, etc."
 ;; Browsing code with xref:
 (global-unset-key (kbd "C-<down-mouse-1>"))
 (global-unset-key (kbd "M-<down-mouse-1>"))
-(global-set-key (kbd "s-<mouse-1>")
+
+;; yuk!
+(global-set-key (if (string-prefix-p "HPel620" system-name) (kbd "C-<mouse-1>")
+                  (kbd "s-<mouse-1>"))
                 (mbd-my-func-mouse xref-find-definitions))
