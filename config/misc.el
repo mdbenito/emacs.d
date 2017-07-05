@@ -210,8 +210,9 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
     (mbd-string-chomp (buffer-string))))
 
 (eval-after-load 'paradox
-  (setq paradox-github-token
-        (mbd-string-from-file "~/.emacs.d/private/paradox-token")))
+  (let ((token "../private/paradox/token"))
+    (when (file-exists-p token) 
+      (setq paradox-github-token (mbd-string-from-file token)))))
 
 (eval-after-load 'tramp
   (setq tramp-default-method "docker"))
