@@ -211,11 +211,6 @@ Removes hooks which could conflict with other themes, etc."
 ;; Changes all yes/no questions to y/n type
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; FIXME: Silly mode icons refuse to work in daemon mode?!?!
-;(eval-after-load #'mode-icons-mode
-;  (mode-icons-mode t))
-(mode-icons-mode t)
-
 ;; Remove useless minor mode names from modeline
 (delight '((doom-buffer-mode "")
            (workgroups-mode "")
