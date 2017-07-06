@@ -150,6 +150,10 @@ Removes hooks which could conflict with other themes, etc."
 (advice-add 'load-theme :before #'mbd--load-theme-before)
 (advice-add 'load-theme :after #'mbd--load-theme-after)
 
+
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
 (load-theme 'doom-one t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -167,7 +171,7 @@ Removes hooks which could conflict with other themes, etc."
       ((string-prefix-p "ingwer" system-name)
        (set-face-attribute 'default nil :family "Ubuntu mono" :height 140))
       ((string-prefix-p "HPel620" system-name)
-       (set-face-attribute 'default nil :family "Ubuntu mono" :height 100)))
+       (set-face-attribute 'default nil :family "Inconsolata" :height 110)))
 
 (blink-cursor-mode 0)
 
