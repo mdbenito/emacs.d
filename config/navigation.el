@@ -76,6 +76,10 @@
       (global-set-key (kbd "M-s-<right>") #'switch-to-next-buffer)
       (global-set-key (kbd "M-s-<left>") #'switch-to-prev-buffer))
 
+;; For mice with back and forward buttons
+(global-set-key (kbd "<mouse-9>") #'switch-to-next-buffer)
+(global-set-key (kbd "<mouse-8>") #'switch-to-prev-buffer)
+
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x C-k") #'kill-this-buffer)
 
