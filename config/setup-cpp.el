@@ -100,6 +100,10 @@
 (define-key c-mode-base-map (kbd "M-.") #'rtags-find-symbol-at-point)
 (define-key c-mode-base-map (kbd "M-?") #'rtags-find-references-at-point)
 
+(eval-after-load 'c++-mode
+  '(progn
+     (define-key c-mode-base-map (kbd "<tab>") #'mbd--complete-or-indent)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-ide should make my life easier... But it doesn't
 (cmake-ide-setup)
