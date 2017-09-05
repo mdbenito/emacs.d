@@ -54,6 +54,8 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#181e26" "#7bc275"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#181e26" "#3D3D48"))
  '(line-number-mode t)
+ '(magit-log-arguments (quote ("-n256" "--graph" "--decorate" "--color")))
+ '(magit-log-margin (quote (t "%b %d %H:%M " magit-log-margin-width t 18)))
  '(markdown-code-lang-modes
    (quote
     (("ocaml" . tuareg-mode)
@@ -194,7 +196,7 @@
  '(mode-icons-change-mode-name nil)
  '(mode-icons-mode t)
  '(neo-autorefresh t)
- '(neo-theme (quote icons) t)
+ '(neo-theme (quote arrow) t)
  '(org-ellipsis "  ")
  '(org-fontify-done-headline t)
  '(org-fontify-quote-and-verse-blocks t)
@@ -211,7 +213,6 @@
      (easy-hugo-basedir . "~/Devel/web/paperwhy")
      (easy-hugo-previewtime . "300")
      (pythonic-environment . "~/Applications/miniconda3/envs/py3"))))
- '(tabbar-mode t nil (tabbar))
  '(tabbar-separator (quote (" ")))
  '(tramp-verbose 1)
  '(vc-annotate-background "#181e26")
@@ -243,12 +244,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(magit-log-author ((t (:foreground "#F2C38F" :height 0.9))))
+ '(magit-log-date ((t (:foreground "#83AFE5" :height 0.9))))
+ '(markdown-code-face ((((class color) (min-colors 257)) (:background "#2e3138")) (((class color) (min-colors 256)) (:background "#303030")) (((class color) (min-colors 16)) (:background "brightblack"))))
  '(mode-line ((t (:height 0.85 :family "Lato"))))
  '(mode-line-inactive ((t (:height 0.85 :family "Lato"))))
- '(markdown-code-face ((((class color) (min-colors 257)) (:background "#2e3138")) (((class color) (min-colors 256)) (:background "#303030")) (((class color) (min-colors 16)) (:background "brightblack"))))
  '(realgud-backtrace-number ((t (:foreground "white" :weight bold))))
  '(realgud-bp-line-disabled-face ((t (:background "gray29"))))
  '(realgud-overlay-arrow1 ((t (:foreground "yellow" :weight bold))))
  '(realgud-overlay-arrow2 ((t (:foreground "yellow3"))))
  '(realgud-overlay-arrow3 ((t (:foreground "yellow4" :weight bold))))
+ '(tabbar-default ((t (:background "#3d4c55" :foreground "gray72" :height 0.9))))
+ '(tabbar-highlight ((t (:inherit tabbar-default :inverse-video t))))
+ '(tabbar-selected ((t (:inherit tabbar-default :background "#3d4c55" :foreground "#c5c8c6" :weight bold))))
+ '(tabbar-unselected ((t (:inherit tabbar-default :foreground "gray72"))))
  '(which-func ((((class color) (min-colors 257)) (:foreground "#51afef")) (((class color) (min-colors 256)) (:foreground "#51afef")) (((class color) (min-colors 16)) (:foreground "brightblue")))))
