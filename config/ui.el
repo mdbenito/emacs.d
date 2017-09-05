@@ -164,7 +164,7 @@ Removes hooks which could conflict with other themes, etc."
 
 ; Height is in 10ths of pt.
 (cond ((string-prefix-p "PelBook" system-name) 
-       (set-face-attribute 'default nil :family "Menlo" :height 130
+       (set-face-attribute 'default nil :family "Menlo" :height 120
                                         :weight 'regular))
       ((string-prefix-p "PelMac" system-name)
        (set-face-attribute 'default nil :family "Menlo" :height 160))
