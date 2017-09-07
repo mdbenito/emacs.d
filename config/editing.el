@@ -196,7 +196,7 @@
 (define-key prog-mode-map (kbd "C-M-<right>") #'forward-sentence)
 
 (global-set-key (kbd "M-p") #'fill-paragraph)
-
+(global-set-key (kbd "M-D") #'backward-kill-word)  ; Meta-Shift-D
 
 ;; Mac shortcuts for linux:
 (when (eq system-type 'gnu/linux) 
