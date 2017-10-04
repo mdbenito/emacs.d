@@ -1038,13 +1038,14 @@ the object file's name just above."
   (when (and (featurep 'rtags)
              (or (file-exists-p (cmake-ide--comp-db-file-name))
                  (cmake-ide--locate-cmakelists)))
-
     (unless (cmake-ide--process-running-p "rdm")
       (let ((buf (get-buffer-create cmake-ide-rdm-buffer-name)))
-        (cmake-ide--message "Starting rdm server")
-        (with-current-buffer buf (start-file-process "rdm" (current-buffer)
-                                                     (cmake-ide-rdm-executable)
-                                                     "-c" cmake-ide-rdm-rc-path))))))
+        (cmake-ide--message "Starting rdm server for buffer %s" (current-buffer))
+        ;; Don't use with-current-buffer or remote execution of rdm using tramp
+        ;; won't work.
+        (start-file-process "rdm" buf
+                            (cmake-ide-rdm-executable)
+                            "-c" cmake-ide-rdm-rc-path)))))
 
 (defun cmake-ide--process-running-p (name)
   "If a process called NAME is running or not."
