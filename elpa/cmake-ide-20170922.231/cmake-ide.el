@@ -214,11 +214,9 @@ the closest possible matches available in cppcheck."
 
 (defun cmake-ide--build-dir-var ()
   "Return the value of cmake-ide-build-dir or cmake-ide-dir."
-  ;; default-directory is buffer local and non nil if we are in a
-  ;; remote buffer. Assume that cmake-ide-build-dir always has a local
+  ;; Assume that cmake-ide-build-dir always has a local
   ;; path (i.e. valid at the remote machine)
-  (concat (file-remote-p default-directory)
-          (or cmake-ide-build-dir cmake-ide-dir)))
+  (or cmake-ide-build-dir cmake-ide-dir))
 
 (defun cmake-ide--mode-hook()
   "Function to add to a major mode hook"
@@ -653,7 +651,7 @@ the object file's name just above."
       (setq build-dir (cmake-ide--get-build-dir-from-hash)))
     (when (not (file-accessible-directory-p build-dir))
       (make-directory build-dir))
-    ;; (cmake-ide--message "Using build dir: %s" build-dir)
+    (cmake-ide--message "Using build dir: %s" build-dir)
     ;; (cmake-ide--message "cmake-ide--build-dir-var was: %s" (cmake-ide--build-dir-var))
     (setq cmake-ide-build-dir build-dir)
     (file-name-as-directory build-dir)))
