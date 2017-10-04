@@ -12,8 +12,9 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
- '(cmake-ide-cmake-opts "-DCMAKE_BUILD_TYPE=Debug")
  '(cmake-ide-cmake-command "/home/fenics/bin/cmake-env")
+ '(cmake-ide-cmake-opts "-DCMAKE_BUILD_TYPE=Debug")
+ '(cmake-ide-rdm-rc-path "~/.rdmrc")
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(compilation-scroll-output (quote first-error))
