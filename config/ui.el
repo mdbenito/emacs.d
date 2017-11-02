@@ -171,7 +171,9 @@ Removes hooks which could conflict with other themes, etc."
       ((string-prefix-p "ingwer" system-name)
        (set-face-attribute 'default nil :family "Ubuntu mono" :height 140))
       ((string-prefix-p "HPel620" system-name)
-       (set-face-attribute 'default nil :family "Inconsolata" :height 110)))
+       (set-face-attribute 'default nil :family "Inconsolata" :height 110))
+      ((string-prefix-p "hpelux" system-name)
+       (set-face-attribute 'default nil :family "Inconsolata" :height 140)))
 
 (blink-cursor-mode 0)
 
