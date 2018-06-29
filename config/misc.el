@@ -215,7 +215,7 @@ Pascal J Bourguignon and TheFlyingDutchman <zzbba…@aol.com>"
       (setq paradox-github-token (mbd-string-from-file token)))))
 
 (eval-after-load 'tramp
-  (setq tramp-default-method "docker"))
+  (setq tramp-default-method "ssh"))
 
 (setq enable-remote-dir-locals t)
 
