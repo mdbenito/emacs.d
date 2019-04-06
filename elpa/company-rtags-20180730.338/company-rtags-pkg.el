@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "company-rtags" "20180730.338" "RTags back-end for company" '((emacs "24.3") (company "0.8.1") (rtags "2.10")) :stars '(#("1437" 0 4 (font-lock-face paradox-star-face))) :commit "475783249d014b5f2c4809af43573b4940775590" :authors '(("Jan Erik Hanssen" . "jhanssen@gmail.com") ("Anders Bakken" . "agbakken@gmail.com")) :maintainer '("Jan Erik Hanssen" . "jhanssen@gmail.com") :url "http://rtags.net")
