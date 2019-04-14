@@ -53,6 +53,7 @@
 ;; Misc
 
 (global-set-key (kbd "S-SPC") #'just-one-space)
+(global-set-key (kbd "C-j") #'join-line)
 
 (when (eq system-type 'darwin)
   (global-set-key (kbd "S-<f1>") #'dash-at-point))
