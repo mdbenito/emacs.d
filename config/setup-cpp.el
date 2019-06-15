@@ -17,11 +17,11 @@
 ;;   - I need to manually reset irony-cdb-json-select
 ;;
 
+(require 'rtags)
 (require 'flycheck-rtags)
 (require 'irony)
 (require 'company-irony)
 (require 'company-c-headers)
-(require 'rtags)
 (require 'cc-mode)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -87,7 +87,7 @@
 
 (setq rtags-tramp-enabled t) ;; Enable rtags to run over tramp
 (setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
+;(rtags-diagnostics)
 
 (eval-after-load 'company
   '(progn

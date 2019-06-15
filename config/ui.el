@@ -50,6 +50,7 @@
 (setq nlinum-highlight-current-line t)
 
 ;; Draw hrulers instead of ^L
+(require 'page-break-lines)
 (global-page-break-lines-mode 1)
 
 ;; Customizations for tabbar
